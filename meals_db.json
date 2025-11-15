@@ -4,7 +4,7 @@
   { "name": "Butternut Squash Risotto", "tags": ["vegetarian", "italian"], "popularity": 0.7 },
   { "name": "Leek & Potato Soup", "tags": ["vegetarian", "soup", "quick"], "popularity": 0.6 },
   { "name": "Classic Fish Pie", "tags": ["fish", "comfort"], "popularity": 0.75 },
-  { "name": "Spaghetti Bolognese", "tags": ["pasta", "italian", "beef"], "popularity": 0.95 },
+  { "name": "Spaghetti Bolognese", "tags": ["pasta", "italian", "lamb"], "popularity": 0.95 },
   { "name": "Chicken Fajitas", "tags": ["mexican", "quick"], "popularity": 0.85 },
   { "name": "Lentil Shepherd's Pie", "tags": ["vegetarian", "vegan", "comfort"], "popularity": 0.65 },
   { "name": "Salmon with Roasted Veg", "tags": ["fish", "healthy", "baked"], "popularity": 0.8 },

@@ -16,7 +16,7 @@ const SAMPLE_MEALS = [
   {name:"Satay Chicken Skewers", tags:["Asian","Chicken"], popularity:0.9},
   {name:"Butternut Squash Risotto", tags:["Vegetarian","Italian"], popularity:0.7},
   {name:"Chicken Fajitas", tags:["Mexican","Quick"], popularity:0.85},
-  {name:"Chicken Shak", tags:["Indian","Chicken"], popularity:0.2}
+  {name:"Chicken Shakshuka", tags:["Indian","Chicken"], popularity:0.2}
 ];
 
 /* ---------- Utilities ---------- */
@@ -57,17 +57,17 @@ async function loadInitialMeals(){
     const text = await resp.text();
     const data = safeParseJSON(text);
     if (!Array.isArray(data)) throw new Error('invalid');
-    meals = data.map(normalizeMeal);
+    meals = data.map(normaliseMeal);
     showToast('Loaded meals_db.json');
   } catch(e){
     console.warn('Using fallback sample meals', e);
-    meals = SAMPLE_MEALS.map(normalizeMeal);
+    meals = SAMPLE_MEALS.map(normaliseMeal);
     showToast('Using sample meal data (no meals_db.json)');
   }
 }
 
-/* ---------- Normalization ---------- */
-function normalizeMeal(m){
+/* ---------- Normalisation ---------- */
+function normaliseMeal(m){
   return {
     name: String(m.name).trim(),
     tags: Array.isArray(m.tags) ? m.tags.map(String) : (String(m.tags||'').split(',').map(s=>s.trim()).filter(Boolean)),
@@ -154,28 +154,19 @@ function renderSuggestions(){
     li.className = 'suggestion';
     li.dataset.index = i;
     li.draggable = true;
-    // allow drop target
-    li.addEventListener('dragover', e=>e.preventDefault());
-    li.addEventListener('drop', handleDropOnSuggestion);
 
-    const left = document.createElement('div');
-    left.className = 'left';
-    const dayName = document.createElement('div');
-    dayName.className = 'day';
-    // compute day label starting at next Monday
-    const monday = nextMonday();
-    const dayDate = new Date(monday); dayDate.setDate(monday.getDate() + i);
-    const dayLabel = dayDate.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'});
-    dayName.textContent = dayLabel;
+    // Drag and drop event listeners
+    li.addEventListener('dragover', e => e.preventDefault());
+    li.addEventListener('dragenter', () => li.classList.add('drag-over'));
+    li.addEventListener('dragleave', () => li.classList.remove('drag-over'));
+    li.addEventListener('drop', (e) => {
+      li.classList.remove('drag-over');
+      handleDropOnSuggestion(e, i);
+    });
 
     const mealName = document.createElement('div');
     mealName.className = 'meal-name';
     mealName.textContent = s?.name || '(no meal)';
-    left.appendChild(dayName);
-    left.appendChild(mealName);
-
-    const right = document.createElement('div');
-    right.className = 'buttons';
 
     const calBtn = document.createElement('a');
     calBtn.className = 'btn highlight-yellow';
@@ -184,18 +175,9 @@ function renderSuggestions(){
     calBtn.rel = 'noopener';
     calBtn.innerHTML = '<i data-lucide="calendar"></i> Add to Calendar';
 
-    const editBtn = document.createElement('button');
-    editBtn.className = 'btn';
-    editBtn.innerHTML = '<i data-lucide="edit-2"></i> Edit';
-    editBtn.addEventListener('click', ()=> openEditModal(i));
+    li.appendChild(mealName);
+    li.appendChild(calBtn);
 
-    right.appendChild(calBtn);
-    right.appendChild(editBtn);
-
-    li.appendChild(left);
-    li.appendChild(right);
-
-    // allow drop from db items: accept dataTransfer 'meal-name' (see db item)
     list.appendChild(li);
   });
 
@@ -203,37 +185,60 @@ function renderSuggestions(){
   if (window.lucide) lucide.createIcons();
 }
 
-function renderDB(){
+function renderDB() {
   const db = document.getElementById('db-list');
-  const search = document.getElementById('search-input').value.trim().toLowerCase();
-  const tagChoice = document.getElementById('tag-filter').value;
+  const searchInput = document.getElementById('search-input');
+  const tagSelect = document.getElementById('tag-filter');
+
+  const search = searchInput.value.trim().toLowerCase();
+  const tagChoice = tagSelect.value;
+
+  // Update tag filter options first, preserving the selected value
+  const tags = uniqueTagsList();
+  const currentOptions = Array.from(tagSelect.options).map(o => o.value).sort().join(',');
+  const newOptions = ['all', ...tags].sort().join(',');
+
+  if (currentOptions !== newOptions) {
+    tagSelect.innerHTML = '<option value="all">all</option>';
+    tags.forEach(t => {
+      const o = document.createElement('option');
+      o.value = t;
+      o.textContent = t;
+      tagSelect.appendChild(o);
+    });
+    // Restore selection
+    tagSelect.value = tagChoice;
+  }
 
   db.innerHTML = '';
-  const filtered = meals.filter(m=>{
-    if (tagChoice !== 'all' && !m.tags.includes(tagChoice)) return false;
-    if (!search) return true;
-    const inName = m.name.toLowerCase().includes(search);
-    const inTags = m.tags.join(' ').toLowerCase().includes(search);
-    return inName || inTags;
+  const filtered = meals.filter(m => {
+    const tagMatch = (tagChoice === 'all' || m.tags.includes(tagChoice));
+    if (!tagMatch) return false;
+
+    const searchMatch = (
+      !search ||
+      m.name.toLowerCase().includes(search) ||
+      m.tags.join(' ').toLowerCase().includes(search)
+    );
+    return searchMatch;
   });
 
-  filtered.forEach(m=>{
+  filtered.forEach(m => {
     const card = document.createElement('div');
     card.className = 'meal-card';
     card.draggable = true;
     card.dataset.mealName = m.name;
 
-    card.addEventListener('dragstart', e=>{
+    card.addEventListener('dragstart', e => {
       e.dataTransfer.setData('text/plain', m.name);
-      // also put a JSON
       e.dataTransfer.setData('application/json', JSON.stringify(m));
     });
 
     const left = document.createElement('div');
-    left.style.display='flex';
-    left.style.flexDirection='column';
+    left.style.display = 'flex';
+    left.style.flexDirection = 'column';
     const h = document.createElement('div');
-    h.style.fontWeight=700;
+    h.style.fontWeight = 700;
     h.textContent = m.name;
     const meta = document.createElement('div');
     meta.className = 'meal-meta';
@@ -242,19 +247,24 @@ function renderDB(){
     left.appendChild(meta);
 
     const right = document.createElement('div');
-    right.style.display='flex'; right.style.flexDirection='column'; right.style.alignItems='flex-end';
+    right.className = 'right';
     const tagWrap = document.createElement('div');
-    m.tags.forEach(t=>{
+    m.tags.forEach(t => {
       const sp = document.createElement('span');
       sp.className = 'tag';
       sp.textContent = t;
+      sp.addEventListener('click', () => {
+        tagSelect.value = t;
+        searchInput.value = ''; // Also clear search
+        renderDB();
+      });
       tagWrap.appendChild(sp);
     });
     const editBtn = document.createElement('button');
-    editBtn.className='link-btn';
+    editBtn.className = 'link-btn edit-btn';
     editBtn.innerHTML = '<i data-lucide="edit-2"></i>';
     editBtn.title = 'Edit meal';
-    editBtn.addEventListener('click', ()=> openEditModalForMealName(m.name));
+    editBtn.addEventListener('click', () => openEditModalForMealName(m.name));
 
     right.appendChild(tagWrap);
     right.appendChild(editBtn);
@@ -264,24 +274,14 @@ function renderDB(){
     db.appendChild(card);
   });
 
-  // update tag filter options
-  const tagSelect = document.getElementById('tag-filter');
-  const tags = uniqueTagsList();
-  const existing = Array.from(tagSelect.options).map(o=>o.value);
-  // only rebuild if different
-  tagSelect.innerHTML = '<option value="all">all</option>';
-  tags.forEach(t=>{
-    const o = document.createElement('option'); o.value=t; o.textContent=t; tagSelect.appendChild(o);
-  });
-
   // refresh icons
   if (window.lucide) lucide.createIcons();
 }
 
+
 /* ---------- Drag & Drop ---------- */
-function handleDropOnSuggestion(e){
+function handleDropOnSuggestion(e, targetIndex){
   e.preventDefault();
-  const targetIndex = Number(this.dataset.index);
   const json = e.dataTransfer.getData('application/json');
   let meal = null;
   if (json) meal = safeParseJSON(json);
@@ -291,7 +291,7 @@ function handleDropOnSuggestion(e){
   }
   if (!meal) return;
   // replace
-  suggestions[targetIndex] = normalizeMeal(meal);
+  suggestions[targetIndex] = normaliseMeal(meal);
   renderSuggestions();
   showToast(`Replaced day ${targetIndex+1} with "${meal.name}"`);
 }
@@ -356,34 +356,34 @@ function saveFromModal(e){
     return;
   }
 
-  const normalized = normalizeMeal({name, tags, popularity: pop});
+  const normalised = normaliseMeal({name, tags, popularity: pop});
 
   if (editingIndex !== null){
     // Update suggestion item; also if meal exists in DB, update that too
-    suggestions[editingIndex] = normalized;
+    suggestions[editingIndex] = normalised;
     // If DB contains the same name, update popularity/tags there as well
-    const dbIdx = meals.findIndex(m=>m.name===normalized.name);
-    if (dbIdx >= 0) meals[dbIdx] = normalized;
+    const dbIdx = meals.findIndex(m=>m.name===normalised.name);
+    if (dbIdx >= 0) meals[dbIdx] = normalised;
     showToast('Updated suggestion');
   } else if (editingMealName !== null){
     // editing DB meal
     const idx = meals.findIndex(m=>m.name===editingMealName);
     if (idx >= 0){
-      meals[idx] = normalized;
+      meals[idx] = normalised;
       showToast('Meal updated');
     } else {
       // fallback add
-      meals.push(normalized);
+      meals.push(normalised);
       showToast('Meal added');
     }
   } else {
     // adding new meal: if name exists overwrite
-    const idx = meals.findIndex(m=>m.name===normalized.name);
+    const idx = meals.findIndex(m=>m.name===normalised.name);
     if (idx >= 0){
-      meals[idx] = normalized;
+      meals[idx] = normalised;
       showToast('Meal overwritten');
     } else {
-      meals.push(normalized);
+      meals.push(normalised);
       showToast('Meal added');
     }
   }
@@ -441,8 +441,8 @@ function mergeImportedMeals(list){
   // map by lower-case name to overwrite duplicates
   const map = new Map(meals.map(m=>[m.name.toLowerCase(), m]));
   list.forEach(raw => {
-    const normalized = normalizeMeal(raw);
-    map.set(normalized.name.toLowerCase(), normalized);
+    const normalised = normaliseMeal(raw);
+    map.set(normalised.name.toLowerCase(), normalised);
   });
   meals = Array.from(map.values());
   renderDB();
@@ -477,29 +477,37 @@ async function init(){
   // DOM elements
   await loadInitialMeals();
 
-  document.getElementById('days-select').value = String(DEFAULT_DAYS);
-  daysCount = DEFAULT_DAYS;
+  const checkedBox = document.querySelector('input[name="days"]:checked');
+  daysCount = checkedBox ? Number(checkedBox.value) : DEFAULT_DAYS;
 
   suggestions = generateSuggestions(daysCount);
   renderSuggestions();
   renderDB();
 
   // set up handlers
-  document.getElementById('days-select').addEventListener('change', (e)=>{
-    daysCount = Number(e.target.value);
-    suggestions = generateSuggestions(daysCount);
-    renderSuggestions();
-    document.getElementById('suggestions-title').textContent = `${daysCount}-Day Meal Suggestions`;
+  const daysRadios = document.querySelectorAll('input[name="days"]');
+  daysRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      daysCount = Number(e.target.value);
+      suggestions = generateSuggestions(daysCount);
+      renderSuggestions();
+      document.getElementById('suggestions-title').textContent = `${daysCount}-Day Meal Suggestions`;
+    });
   });
 
-  document.getElementById('randomize-btn').addEventListener('click', ()=>{
+  document.getElementById('randomise-btn').addEventListener('click', ()=>{
     suggestions = generateSuggestions(daysCount);
     renderSuggestions();
-    showToast('Week randomized');
+    showToast('Week randomised');
   });
 
   document.getElementById('search-input').addEventListener('input', renderDB);
-  document.getElementById('tag-filter').addEventListener('change', renderDB);
+  document.getElementById('tag-filter').addEventListener('change', (e) => {
+    if (e.target.value === 'all') {
+      document.getElementById('search-input').value = '';
+    }
+    renderDB();
+  });
 
   document.getElementById('add-meal-open').addEventListener('click', ()=>openEditModal());
 
@@ -514,16 +522,12 @@ async function init(){
   });
 
   document.getElementById('export-json').addEventListener('click', exportJSON);
-  document.getElementById('export-csv').addEventListener('click', exportCSV);
 
   // wire the visible upload label to the existing hidden input (if present)
   const importLabel = document.querySelector('label.link-btn[title="Upload meals"]');
   if (importLabel && document.getElementById('import-file')){
     importLabel.addEventListener('click', ()=>document.getElementById('import-file').click());
   }
-
-  // clicking edit on suggestion opens modal with suggestion data already handled.
-  // Clicking edit on db item handled via renderDB's button.
 }
 
 /* ---------- Kick off ---------- */
