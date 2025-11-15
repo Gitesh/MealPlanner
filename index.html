@@ -72,7 +72,7 @@
       <div class="db-controls">
         <input id="search-input" type="search" placeholder="Search meals or tags..." />
         <label for="tag-filter">Filter by tag:</label>
-        <select id="tag-filter">
+        <select id="tag-filter" title="Filter meals by tag">
           <option value="all">all</option>
         </select>
       </div>
@@ -105,6 +105,6 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="app.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => lucide.createIcons());</script>
+  <script>document.addEventListener('DOMContentLoaded', () => { if (window.lucide) lucide.createIcons(); });</script>
 </body>
 </html>

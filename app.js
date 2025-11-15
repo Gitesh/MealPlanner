@@ -200,7 +200,7 @@ function renderSuggestions(){
   });
 
   // refresh icons
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 }
 
 function renderDB(){
@@ -275,7 +275,7 @@ function renderDB(){
   });
 
   // refresh icons
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 }
 
 /* ---------- Drag & Drop ---------- */
