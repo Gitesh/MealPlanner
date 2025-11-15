@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Meal Planner</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- globals.css -->
+  <link rel="stylesheet" href="global.css">
+
+  <!-- lucide icons -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.264.0/dist/lucide.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="logo">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M2 12s4 6 10 6 10-6 10-6" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7 9l3 3" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 9l-3 3" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="title">
+      <h1>Simple Meal Planner</h1>
+      <p>Plan your week, one delicious meal at a time.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card suggestions-card">
+      <h2 id="suggestions-title">Meal Suggestions</h2>
+      <p class="muted">Your dinner plan for the upcoming week. Drag meals from the database to replace a day.</p>
+
+      <div class="controls">
+        <label class="inline">Days:
+          <select id="days-select">
+            <option value="5" selected>5 Day</option>
+            <option value="7">7 Day</option>
+          </select>
+        </label>
+
+        <button id="randomize-btn" class="btn highlight-teal">
+          <i data-lucide="shuffle"></i>
+          Randomize Week
+        </button>
+      </div>
+
+      <ul id="suggestions-list" class="suggestions-list" aria-live="polite"></ul>
+
+      <div class="footer-actions">
+        <label class="muted">Want different options?</label>
+        <div class="file-controls">
+          <label class="link-btn" title="Upload meals">
+            <i data-lucide="upload"></i> Upload meals
+            <input id="import-file" type="file" accept=".json,.csv" class="hidden">
+          </label>
+          <div class="export-group">
+            <button id="export-json" class="link-btn"><i data-lucide="download"></i> Export JSON</button>
+            <button id="export-csv" class="link-btn"><i data-lucide="download"></i> Export CSV</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card database-card">
+      <h2>Meal Database</h2>
+      <p class="muted">Browse all available meals or filter by name and tag.</p>
+
+      <div class="db-controls">
+        <input id="search-input" type="search" placeholder="Search meals or tags..." />
+        <label for="tag-filter">Filter by tag:</label>
+        <select id="tag-filter">
+          <option value="all">all</option>
+        </select>
+      </div>
+
+      <div class="db-list" id="db-list" aria-live="polite"></div>
+
+      <div class="db-actions">
+        <button id="add-meal-open" class="btn"><i data-lucide="plus-circle"></i> Add a new meal</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit / Add modal -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <h3 id="modal-title">Edit Meal</h3>
+      <form id="meal-form">
+        <label>Name<input type="text" id="meal-name" required></label>
+        <label>Tags (comma separated)<input type="text" id="meal-tags"></label>
+        <label>Popularity (0 to 1)<input type="number" id="meal-pop" min="0" max="1" step="0.01" value="0.5"></label>
+        <div class="modal-actions">
+          <button type="button" id="modal-cancel" class="btn">Cancel</button>
+          <button type="submit" id="modal-save" class="btn highlight-yellow"><i data-lucide="save"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => lucide.createIcons());</script>
+</body>
+</html>
