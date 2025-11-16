@@ -287,8 +287,20 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.remove('drag-over');
             const sourceMealId = draggedItem.dataset.mealId;
             const meal = meals.find(m => m.id === sourceMealId);
-            target.querySelector('.meal-name').textContent = meal.name;
+
+            // update visible meal name in the suggestion
+            const mealNameEl = target.querySelector('.meal-name');
+            if (mealNameEl) mealNameEl.textContent = meal.name;
+
+            // update suggestion's dataset so other logic can reference the new meal id
             target.dataset.mealId = meal.id;
+
+            // IMPORTANT: update the calendar button's data so "Add to Calendar" uses the new meal
+            const calBtn = target.querySelector('.calendar-btn');
+            if (calBtn) {
+                calBtn.dataset.mealName = meal.name;
+            }
+
             showToast('Meal updated in suggestions!');
         }
     });
