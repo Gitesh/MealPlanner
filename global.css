@@ -121,22 +121,25 @@ body {
     font-size: 0.9rem;
 }
 
-@keyframes wobble {
+@keyframes shake {
   0%, 100% {
-    transform: rotate(0deg);
+    transform: translateY(0);
   }
   25% {
-    transform: rotate(-2deg);
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(0);
   }
   75% {
-    transform: rotate(2deg);
+    transform: translateY(4px);
   }
 }
 
 .suggestion.drag-over {
   background-color: transparent;
   border: 2px dashed var(--primary);
-  animation: wobble 0.5s infinite;
+  animation: shake 0.5s infinite;
 }
 
 .btn {
@@ -165,13 +168,32 @@ body {
 .btn.highlight-yellow, .btn.highlight-yellow:hover { background-color: var(--highlight-yellow); color: var(--text-primary); }
 
 .controls.footer {
-  margin-top: 1rem;
+  margin-top: auto;
   padding-top: 0.75rem;
   border-top: 1px solid var(--card-border);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
   flex-shrink: 0;
+}
+
+.actions-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+  justify-content: flex-start;
+  align-self: flex-end;
+  margin-top: 0.25rem;
+}
+
+.actions-right .btn {
+  padding: 0.32rem 0.5rem;
+  font-size: 0.82rem;
+  border-radius: 6px;
+  gap: 0.25rem;
+  min-width: 90px;
 }
 
 .want-different p {
@@ -179,6 +201,16 @@ body {
   margin: 0 0 0.5rem;
   font-size: 0.9rem;
 }
+
+.days-and-randomise {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.days-options { display: flex; gap: 0.5rem; align-items: center; }
+
+.btn.small { padding: 0.28rem 0.45rem; font-size: 0.82rem; min-width: 84px; }
 
 .days-options {
   display: flex;
@@ -195,9 +227,10 @@ body {
 
 .db-controls {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
+  align-items: center;
 }
 
 #search-input, #tag-filter {
@@ -275,6 +308,19 @@ body {
   padding-top: 0.75rem;
   border-top: 1px solid var(--card-border);
   text-align: center;
+}
+
+.show-dates {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.show-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .footer-actions {
@@ -361,4 +407,45 @@ body {
 .suggestion-date .month-day {
   font-size: 0.75rem;
   line-height: 1;
+}
+
+.shopping-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+
+.shopping-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.shopping-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+.shopping-list-item input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.shopping-list-item input[type="checkbox"]:checked + span {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.shopping-list-item span {
+  flex: 1;
 }

@@ -1,0 +1,39 @@
+.shopping-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+
+.shopping-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.shopping-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+.shopping-list-item input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.shopping-list-item input[type="checkbox"]:checked + span {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.shopping-list-item span {
+  flex: 1;
+}

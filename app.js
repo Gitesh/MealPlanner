@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const suggestionsTitle = document.getElementById('suggestions-title');
     const randomiseBtn = document.getElementById('randomise-btn');
     const dbList = document.getElementById('db-list');
+    const dbTitle = document.getElementById('db-title');
     const searchInput = document.getElementById('search-input');
     const tagFilter = document.getElementById('tag-filter');
     const addMealOpen = document.getElementById('add-meal-open');
@@ -23,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const importFile = document.getElementById('import-file');
     const toast = document.getElementById('toast');
     const showDatesToggle = document.getElementById('show-dates-toggle');
+    const shoppingListBtn = document.getElementById('shopping-list-btn');
+    const shoppingListModal = document.getElementById('shopping-list-modal');
+    const shoppingListItems = document.getElementById('shopping-list-items');
+    const shoppingListClose = document.getElementById('shopping-list-close');
 
 
     let meals = [];
@@ -35,9 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             meals = data.map((meal, index) => ({ id: `m${index}`, ...meal }));
             updateAllTags();
+            updateDBTitle();
             renderDB();
             renderSuggestions(document.querySelector('input[name="days"]:checked').value);
         });
+
+    function updateDBTitle() {
+        dbTitle.textContent = `Choose from ${meals.length} meal${meals.length !== 1 ? 's' : ''}`;
+    }
 
     function updateAllTags() {
         allTags.clear();
@@ -102,13 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const suggestionEl = document.createElement('div');
             suggestionEl.className = 'suggestion';
             suggestionEl.dataset.mealId = meal.id;
+            const buttonDate = new Date(date);
             suggestionEl.innerHTML = `
                 <div class="suggestion-date">
                   <div class="day">${date.getDate()}</div>
                   <div class="month-day">${date.toLocaleString('default', { month: 'short' })}</div>
                 </div>
                 <span class="meal-name">${meal.name}</span>
-                <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date-index="${index}">
+                <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${buttonDate.toISOString()}">
                   <span class="material-symbols-outlined">event</span><span class="calendar-text"> Add to Calendar</span>
                 </button>
             `;
@@ -121,18 +132,15 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const mealName = btn.dataset.mealName;
-                const dateIndex = parseInt(btn.dataset.dateIndex);
-                openCalendarLink(mealName, dateIndex);
+                const eventDate = new Date(btn.dataset.date);
+                openCalendarLink(mealName, eventDate);
             });
         });
 
         updateDateVisibility();
     }
 
-    function openCalendarLink(mealName, dayIndex) {
-        const startDate = new Date();
-        const eventDate = new Date(startDate);
-        eventDate.setDate(startDate.getDate() + dayIndex);
+    function openCalendarLink(mealName, eventDate) {
         eventDate.setHours(18, 0, 0, 0); // 6 PM
         
         const pad = (n) => String(n).padStart(2, '0');
@@ -141,11 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const endDate = new Date(eventDate.getTime() + 60 * 60 * 1000); // 1 hour duration
         const end = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
         
+        // Find the meal and get its ingredients
+        const meal = meals.find(m => m.name === mealName);
+        let details = `Meal planned: ${mealName}`;
+        if (meal && meal.ingredients && meal.ingredients.length > 0) {
+            const ingredientsList = meal.ingredients.map(ing => `• ${ing}`).join('\n');
+            details = `Meal planned: ${mealName}\n\nIngredients:\n${ingredientsList}`;
+        }
+        
         const params = new URLSearchParams({
             action: 'TEMPLATE',
             text: mealName,
             dates: `${start}/${end}`,
-            details: `Meal planned: ${mealName}`,
+            details: details,
             sf: 'true',
             output: 'xml'
         });
@@ -167,6 +183,48 @@ document.addEventListener('DOMContentLoaded', () => {
         return list[list.length - 1];
     }
 
+    // Function to populate modal with meal data
+    function populateModal(meal) {
+        mealNameInput.value = meal.name;
+        mealTagsInput.value = meal.tags.join(', ');
+        mealPopInput.value = meal.popularity;
+        popValue.textContent = meal.popularity;
+        document.getElementById('ingredients').value = (meal.ingredients || []).join(', ');
+    }
+
+    // Function to handle adding a new meal
+    function addMeal() {
+        const name = mealNameInput.value.trim();
+        if (!name) return;
+        const tags = mealTagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
+        const popularity = parseFloat(mealPopInput.value);
+        const ingredients = document.getElementById('ingredients').value.split(',').map(ingredient => ingredient.trim());
+
+        if (editingMealId) {
+            // Update existing meal
+            const meal = meals.find(m => m.id === editingMealId);
+            meal.name = name;
+            meal.tags = tags;
+            meal.popularity = popularity;
+            meal.ingredients = ingredients;
+        } else {
+            // Add new meal
+            const newMeal = {
+                id: `m${Date.now()}`,
+                name,
+                tags,
+                popularity,
+                ingredients
+            };
+            meals.push(newMeal);
+        }
+        updateAllTags();
+        updateDBTitle();
+        renderDB(searchInput.value, tagFilter.value);
+        modal.classList.add('hidden');
+        showToast(editingMealId ? 'Meal updated!' : 'Meal added!');
+    }
+
     // Event listeners
     randomiseBtn.addEventListener('click', () => {
         const selectedDays = document.querySelector('input[name="days"]:checked').value;
@@ -186,10 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
             editingMealId = e.target.closest('.edit-btn').dataset.id;
             const meal = meals.find(m => m.id === editingMealId);
             modalTitle.textContent = 'Edit Meal';
-            mealNameInput.value = meal.name;
-            mealTagsInput.value = meal.tags.join(', ');
-            mealPopInput.value = meal.popularity;
-            popValue.textContent = meal.popularity;
+            populateModal(meal);
             modal.classList.remove('hidden');
         } else if (e.target.classList.contains('tag')) {
             const tag = e.target.dataset.tag;
@@ -213,31 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     mealForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = mealNameInput.value.trim();
-        if (!name) return;
-        const tags = mealTagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
-        const popularity = parseFloat(mealPopInput.value);
-
-        if (editingMealId) {
-            // Update existing meal
-            const meal = meals.find(m => m.id === editingMealId);
-            meal.name = name;
-            meal.tags = tags;
-            meal.popularity = popularity;
-        } else {
-            // Add new meal
-            const newMeal = {
-                id: `m${Date.now()}`,
-                name,
-                tags,
-                popularity
-            };
-            meals.push(newMeal);
-        }
-        updateAllTags();
-        renderDB(searchInput.value, tagFilter.value);
-        modal.classList.add('hidden');
-        showToast(editingMealId ? 'Meal updated!' : 'Meal added!');
+        addMeal();
     });
     
     mealPopInput.addEventListener('input', () => popValue.textContent = mealPopInput.value);
@@ -316,8 +347,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getTimestampFilename(extension) {
-        const now = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        return `meals_${now}.${extension}`;
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const timestamp = `${year}-${month}-${day}_${hours}${minutes}${seconds}`;
+        return `${timestamp}_meals.${extension}`;
     }
 
     function exportAsJSON() {
@@ -328,11 +366,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function exportAsCSV() {
-        const headers = ['name', 'tags', 'popularity'];
+        const headers = ['name', 'tags', 'popularity', 'ingredients'];
         const rows = meals.map(m => [
             `"${m.name.replace(/"/g, '""')}"`,
             `"${(m.tags || []).join(';').replace(/"/g, '""')}"`,
-            m.popularity
+            m.popularity,
+            `"${(m.ingredients || []).join(';').replace(/"/g, '""')}"`
         ]);
         const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
         downloadFile(getTimestampFilename('csv'), csv, 'text/csv');
@@ -351,6 +390,47 @@ document.addEventListener('DOMContentLoaded', () => {
         exportModal.classList.add('hidden');
     });
 
+    shoppingListBtn.addEventListener('click', () => {
+        generateShoppingList();
+    });
+
+    shoppingListClose.addEventListener('click', () => {
+        shoppingListModal.classList.add('hidden');
+    });
+
+    function generateShoppingList() {
+        // Collect all ingredients from current suggestions
+        const ingredientSet = new Set();
+        const suggestionCards = suggestionsList.querySelectorAll('.suggestion');
+        
+        suggestionCards.forEach(card => {
+            const mealName = card.querySelector('.meal-name').textContent;
+            const meal = meals.find(m => m.name === mealName);
+            if (meal && meal.ingredients && Array.isArray(meal.ingredients)) {
+                meal.ingredients.forEach(ingredient => {
+                    if (ingredient.trim()) {
+                        ingredientSet.add(ingredient.trim());
+                    }
+                });
+            }
+        });
+
+        // Generate HTML for ingredients with checkboxes
+        if (ingredientSet.size === 0) {
+            shoppingListItems.innerHTML = '<p class="muted">No ingredients in current meal suggestions</p>';
+        } else {
+            const ingredientsList = Array.from(ingredientSet).sort();
+            shoppingListItems.innerHTML = ingredientsList.map((ingredient, index) => `
+                <label class="shopping-list-item">
+                    <input type="checkbox" class="ingredient-checkbox" data-ingredient="${ingredient}">
+                    <span>${ingredient}</span>
+                </label>
+            `).join('');
+        }
+
+        shoppingListModal.classList.remove('hidden');
+    }
+
     function parseCSV(text) {
         const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
         if (lines.length < 2) return [];
@@ -359,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameIdx = headers.indexOf('name');
         const tagsIdx = headers.indexOf('tags');
         const popIdx = headers.indexOf('popularity');
+        const ingredientsIdx = headers.indexOf('ingredients');
         
         const result = [];
         for (let i = 1; i < lines.length; i++) {
@@ -368,7 +449,8 @@ document.addEventListener('DOMContentLoaded', () => {
             result.push({
                 name: row[nameIdx] || row[0] || `Row ${i}`,
                 tags: (row[tagsIdx] || '').split(';').map(t => t.trim()).filter(Boolean),
-                popularity: parseFloat(row[popIdx]) || 0.5
+                popularity: parseFloat(row[popIdx]) || 0.5,
+                ingredients: (row[ingredientsIdx] || '').split(';').map(ing => ing.trim()).filter(Boolean)
             });
         }
         return result;
@@ -401,6 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (Array.isArray(importedMeals)) {
                     meals = importedMeals.map((meal, index) => ({ id: `m${index}`, ...meal }));
                     updateAllTags();
+                    updateDBTitle();
                     renderDB();
                     renderSuggestions(document.querySelector('input[name="days"]:checked').value);
                     showToast(`Imported ${importedMeals.length} meals`);

@@ -1,13 +1,13 @@
 [
-  { "name": "Tuna Pasta Bake", "tags": ["pasta", "fish", "baked"], "popularity": 0.8 },
-  { "name": "Satay Chicken Skewers", "tags": ["quick", "asian"], "popularity": 0.9 },
-  { "name": "Butternut Squash Risotto", "tags": ["vegetarian", "italian"], "popularity": 0.7 },
-  { "name": "Leek & Potato Soup", "tags": ["vegetarian", "soup", "quick"], "popularity": 0.6 },
-  { "name": "Classic Fish Pie", "tags": ["fish", "comfort"], "popularity": 0.75 },
-  { "name": "Spaghetti Bolognese", "tags": ["pasta", "italian", "lamb"], "popularity": 0.95 },
-  { "name": "Chicken Fajitas", "tags": ["mexican", "quick"], "popularity": 0.85 },
-  { "name": "Lentil Shepherd's Pie", "tags": ["vegetarian", "vegan", "comfort"], "popularity": 0.65 },
-  { "name": "Salmon with Roasted Veg", "tags": ["fish", "healthy", "baked"], "popularity": 0.8 },
-  { "name": "Chicken Shak", "tags": ["indian", "mild", "chicken"], "popularity": 0.2 },
-  { "name": "Thai Green Curry", "tags": ["asian", "spicy", "chicken"], "popularity": 0.9 }
+  { "name": "Tuna Pasta Bake", "tags": ["pasta", "fish", "baked"], "popularity": 0.8, "ingredients": ["tuna", "pasta", "cheese"] },
+  { "name": "Satay Chicken Skewers", "tags": ["quick", "asian"], "popularity": 0.9, "ingredients": ["chicken", "satay sauce", "skewers"] },
+  { "name": "Butternut Squash Risotto", "tags": ["vegetarian", "italian"], "popularity": 0.7, "ingredients": ["butternut squash", "rice", "parmesan"] },
+  { "name": "Leek & Potato Soup", "tags": ["vegetarian", "soup", "quick"], "popularity": 0.6, "ingredients": ["leeks", "potatoes", "vegetable stock"] },
+  { "name": "Classic Fish Pie", "tags": ["fish", "comfort"], "popularity": 0.75, "ingredients": ["fish", "potatoes", "milk"] },
+  { "name": "Spaghetti Bolognese", "tags": ["pasta", "italian", "lamb"], "popularity": 0.95, "ingredients": ["spaghetti", "lamb", "tomato sauce"] },
+  { "name": "Chicken Fajitas", "tags": ["mexican", "quick"], "popularity": 0.85, "ingredients": ["chicken", "peppers", "tortillas"] },
+  { "name": "Lentil Shepherd's Pie", "tags": ["vegetarian", "vegan", "comfort"], "popularity": 0.65, "ingredients": ["lentils", "potatoes", "carrots"] },
+  { "name": "Salmon with Roasted Veg", "tags": ["fish", "healthy", "baked"], "popularity": 0.8, "ingredients": ["salmon", "vegetables", "olive oil"] },
+  { "name": "Chicken Shak", "tags": ["indian", "mild", "chicken"], "popularity": 0.2, "ingredients": ["chicken", "spices", "yogurt"] },
+  { "name": "Thai Green Curry", "tags": ["asian", "spicy", "chicken"], "popularity": 0.9, "ingredients": ["chicken", "curry paste", "coconut milk"] }
 ]
