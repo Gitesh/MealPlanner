@@ -136,7 +136,7 @@ body {
 .suggestion.drag-over {
   background-color: transparent;
   border: 2px dashed var(--primary);
-  animation: wobble 0.4s ease-in-out;
+  animation: wobble 0.5s infinite;
 }
 
 .btn {
