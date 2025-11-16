@@ -61,7 +61,7 @@
                 <span class="button-text">Import</span>
               </label>
               <input type="file" id="import-file" class="hidden" accept=".json,.csv">
-              <button id="export-json" class="link-btn" title="Download as JSON">
+              <button id="export-btn" class="link-btn" title="Download meals">
                 <span class="material-symbols-outlined">download</span>
                 <span class="button-text">Export</span>
               </button>
@@ -90,10 +90,29 @@
            </form>
          </div>
        </div>
-     
-      <!-- Toast -->
-      <div id="toast" class="toast hidden"></div>
     
-      <script src="app.js"></script>
-    </body>
-    </html>
+       <!-- Export Format modal -->
+       <div id="export-modal" class="modal hidden" role="dialog" aria-modal="true">
+         <div class="modal-content">
+           <h3>Export Meals</h3>
+           <p class="modal-description">Choose a format to export your meals:</p>
+           <div class="modal-actions">
+             <button id="export-json-btn" class="btn highlight-yellow">
+               <span class="material-symbols-outlined">description</span>
+               <span class="button-text">JSON</span>
+             </button>
+             <button id="export-csv-btn" class="btn highlight-yellow">
+               <span class="material-symbols-outlined">table_chart</span>
+               <span class="button-text">CSV</span>
+             </button>
+             <button id="export-cancel" class="btn">Cancel</button>
+           </div>
+         </div>
+       </div>
+    
+       <!-- Toast -->
+       <div id="toast" class="toast hidden"></div>
+    
+       <script src="app.js"></script>
+     </body>
+   </html>

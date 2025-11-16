@@ -15,7 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const mealTagsInput = document.getElementById('meal-tags');
     const mealPopInput = document.getElementById('meal-pop');
     const popValue = document.getElementById('pop-value');
-    const exportJsonBtn = document.getElementById('export-json');
+    const exportBtn = document.getElementById('export-btn');
+    const exportModal = document.getElementById('export-modal');
+    const exportJsonBtn = document.getElementById('export-json-btn');
+    const exportCsvBtn = document.getElementById('export-csv-btn');
+    const exportCancel = document.getElementById('export-cancel');
     const importFile = document.getElementById('import-file');
     const toast = document.getElementById('toast');
     const showDatesToggle = document.getElementById('show-dates-toggle');
@@ -94,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        suggestions.forEach(meal => {
+        suggestions.forEach((meal, index) => {
             const suggestionEl = document.createElement('div');
             suggestionEl.className = 'suggestion';
             suggestionEl.dataset.mealId = meal.id;
@@ -104,12 +108,50 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="month-day">${date.toLocaleString('default', { month: 'short' })}</div>
                 </div>
                 <span class="meal-name">${meal.name}</span>
-                <a href="#" class="btn highlight-yellow">Add to Calendar</a>
+                <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date-index="${index}">
+                  <span class="material-symbols-outlined">event</span><span class="calendar-text"> Add to Calendar</span>
+                </button>
             `;
             suggestionsList.appendChild(suggestionEl);
             date.setDate(date.getDate() + 1);
         });
+
+        // Add click handler for calendar buttons
+        suggestionsList.querySelectorAll('.calendar-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const mealName = btn.dataset.mealName;
+                const dateIndex = parseInt(btn.dataset.dateIndex);
+                openCalendarLink(mealName, dateIndex);
+            });
+        });
+
         updateDateVisibility();
+    }
+
+    function openCalendarLink(mealName, dayIndex) {
+        const startDate = new Date();
+        const eventDate = new Date(startDate);
+        eventDate.setDate(startDate.getDate() + dayIndex);
+        eventDate.setHours(18, 0, 0, 0); // 6 PM
+        
+        const pad = (n) => String(n).padStart(2, '0');
+        const start = `${eventDate.getFullYear()}${pad(eventDate.getMonth() + 1)}${pad(eventDate.getDate())}T${pad(eventDate.getHours())}${pad(eventDate.getMinutes())}00`;
+        
+        const endDate = new Date(eventDate.getTime() + 60 * 60 * 1000); // 1 hour duration
+        const end = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
+        
+        const params = new URLSearchParams({
+            action: 'TEMPLATE',
+            text: mealName,
+            dates: `${start}/${end}`,
+            details: `Meal planned: ${mealName}`,
+            sf: 'true',
+            output: 'xml'
+        });
+        
+        const calendarUrl = `https://www.google.com/calendar/render?${params.toString()}`;
+        window.open(calendarUrl, '_blank');
     }
 
     function weightedRandomSelect(list) {
@@ -251,17 +293,74 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Import / Export
-    exportJsonBtn.addEventListener('click', () => {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(meals, null, 2));
+    function downloadFile(filename, content, type) {
+        const dataStr = `data:${type};charset=utf-8,${encodeURIComponent(content)}`;
         const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", "meals.json");
-        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.setAttribute("download", filename);
+        document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
-        showToast('Exported to meals.json');
+    }
+
+    function getTimestampFilename(extension) {
+        const now = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        return `meals_${now}.${extension}`;
+    }
+
+    function exportAsJSON() {
+        const jsonStr = JSON.stringify(meals, null, 2);
+        downloadFile(getTimestampFilename('json'), jsonStr, 'application/json');
+        showToast('Exported to JSON');
+        exportModal.classList.add('hidden');
+    }
+
+    function exportAsCSV() {
+        const headers = ['name', 'tags', 'popularity'];
+        const rows = meals.map(m => [
+            `"${m.name.replace(/"/g, '""')}"`,
+            `"${(m.tags || []).join(';').replace(/"/g, '""')}"`,
+            m.popularity
+        ]);
+        const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        downloadFile(getTimestampFilename('csv'), csv, 'text/csv');
+        showToast('Exported to CSV');
+        exportModal.classList.add('hidden');
+    }
+
+    exportBtn.addEventListener('click', () => {
+        exportModal.classList.remove('hidden');
     });
+
+    exportJsonBtn.addEventListener('click', exportAsJSON);
+    exportCsvBtn.addEventListener('click', exportAsCSV);
+
+    exportCancel.addEventListener('click', () => {
+        exportModal.classList.add('hidden');
+    });
+
+    function parseCSV(text) {
+        const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+        if (lines.length < 2) return [];
+        
+        const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim().toLowerCase());
+        const nameIdx = headers.indexOf('name');
+        const tagsIdx = headers.indexOf('tags');
+        const popIdx = headers.indexOf('popularity');
+        
+        const result = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].match(/(?:"[^"]*"|[^,])+/g) || [];
+            const row = values.map(v => v.replace(/^"|"$/g, '').trim());
+            
+            result.push({
+                name: row[nameIdx] || row[0] || `Row ${i}`,
+                tags: (row[tagsIdx] || '').split(';').map(t => t.trim()).filter(Boolean),
+                popularity: parseFloat(row[popIdx]) || 0.5
+            });
+        }
+        return result;
+    }
 
     importFile.addEventListener('change', e => {
         const file = e.target.files[0];
@@ -270,7 +369,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
-                const importedMeals = JSON.parse(event.target.result);
+                const text = event.target.result;
+                let importedMeals = [];
+                
+                // Auto-detect format by file extension
+                if (file.name.toLowerCase().endsWith('.json')) {
+                    importedMeals = JSON.parse(text);
+                    if (!Array.isArray(importedMeals)) {
+                        showToast('Invalid JSON format: expected an array');
+                        return;
+                    }
+                } else if (file.name.toLowerCase().endsWith('.csv')) {
+                    importedMeals = parseCSV(text);
+                } else {
+                    showToast('Unsupported file format. Use .json or .csv');
+                    return;
+                }
+                
                 if (Array.isArray(importedMeals)) {
                     meals = importedMeals.map((meal, index) => ({ id: `m${index}`, ...meal }));
                     updateAllTags();
@@ -278,14 +393,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     renderSuggestions(document.querySelector('input[name="days"]:checked').value);
                     showToast(`Imported ${importedMeals.length} meals`);
                 } else {
-                    showToast('Invalid JSON format');
+                    showToast('Invalid data format');
                 }
             } catch (error) {
-                showToast('Error parsing JSON file');
+                showToast('Error parsing file: ' + error.message);
             }
         };
         reader.readAsText(file);
-        importFile.value = ''; // Reset for same-file import
+        importFile.value = '';
     });
 
     function showToast(message) {
