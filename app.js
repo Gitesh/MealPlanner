@@ -40,14 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             meals = data.map((meal, index) => ({ id: `m${index}`, ...meal }));
             updateAllTags();
-            updateDBTitle();
+            updateAllTags();
             renderDB();
             renderSuggestions(document.querySelector('input[name="days"]:checked').value);
         });
 
-    function updateDBTitle() {
-        dbTitle.textContent = `Choose from ${meals.length} meal${meals.length !== 1 ? 's' : ''}`;
-    }
+
 
     function updateAllTags() {
         allTags.clear();
@@ -74,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const matchesTag = tag === 'all' || meal.tags.includes(tag);
             return matchesFilter && matchesTag;
         });
+
+        dbTitle.textContent = `Choose from ${filteredMeals.length} meal${filteredMeals.length !== 1 ? 's' : ''}`;
 
         filteredMeals.forEach(meal => {
             const mealCard = document.createElement('div');
@@ -219,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
             meals.push(newMeal);
         }
         updateAllTags();
-        updateDBTitle();
         renderDB(searchInput.value, tagFilter.value);
         modal.classList.add('hidden');
         showToast(editingMealId ? 'Meal updated!' : 'Meal added!');
@@ -558,7 +557,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (Array.isArray(importedMeals)) {
                     meals = importedMeals.map((meal, index) => ({ id: `m${index}`, ...meal }));
                     updateAllTags();
-                    updateDBTitle();
                     renderDB();
                     renderSuggestions(document.querySelector('input[name="days"]:checked').value);
                     showToast(`Imported ${importedMeals.length} meals`);
