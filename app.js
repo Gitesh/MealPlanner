@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestionEl.innerHTML = `
                 <div class="suggestion-date">
                   <div class="day">${date.getDate()}</div>
-                  <div class="month-day">${date.toLocaleString('default', { month: 'short' })}</div>
+                  <div class="month-day">${date.toLocaleString('default', { weekday: 'short' })} ${date.toLocaleString('default', { month: 'short' })}</div>
                 </div>
                 <span class="meal-name">${meal.name}</span>
                 <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${buttonDate.toISOString()}">
