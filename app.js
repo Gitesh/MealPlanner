@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let meals = [];
     let allTags = new Set();
     let editingMealId = null;
+    let mealsEdited = false;
 
     // Load initial data
     fetch('meals_db.json')
@@ -221,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAllTags();
         renderDB(searchInput.value, tagFilter.value);
         modal.classList.add('hidden');
+        mealsEdited = true;
         showToast(editingMealId ? 'Meal updated!' : 'Meal added!');
     }
 
@@ -361,6 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const jsonStr = JSON.stringify(meals, null, 2);
         downloadFile(getTimestampFilename('json'), jsonStr, 'application/json');
         showToast('Exported to JSON');
+        mealsEdited = false;
         exportModal.classList.add('hidden');
     }
 
@@ -375,6 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
         downloadFile(getTimestampFilename('csv'), csv, 'text/csv');
         showToast('Exported to CSV');
+        mealsEdited = false;
         exportModal.classList.add('hidden');
     }
 
@@ -559,6 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateAllTags();
                     renderDB();
                     renderSuggestions(document.querySelector('input[name="days"]:checked').value);
+                    mealsEdited = true;
                     showToast(`Imported ${importedMeals.length} meals`);
                 } else {
                     showToast('Invalid data format');
@@ -589,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exit Intent Detection
     let exitIntentShown = false;
     document.addEventListener('mouseout', (e) => {
-        if (exitIntentShown) return;
+        if (exitIntentShown || !mealsEdited) return;
 
         // Check if mouse left the window from the top
         if (e.clientY <= 0) {
