@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Meal Planner</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="global.css">
 </head>
+
 <body>
   <header class="app-header">
     <span class="material-symbols-outlined" style="font-size: 2.5rem; font-weight: 700;">restaurant</span>
@@ -25,15 +28,16 @@
       <div id="suggestions-list" class="suggestions-list"></div>
       <div class="controls footer">
         <div class="want-different">
-            <p>Want a different plan?</p>
-            <div class="days-and-randomise">
-              <div class="days-options">
-                  <label><input type="radio" name="days" value="3"> 3 days</label>
-                  <label><input type="radio" name="days" value="5" checked> 5 days</label>
-                  <label><input type="radio" name="days" value="7"> 7 days</label>
-              </div>
-              <button id="randomise-btn" class="link-btn" title="Randomise Meals"><span class="button-text">Randomise meals</span><span class="material-symbols-outlined">casino</span></button>
+          <p>Want a different plan?</p>
+          <div class="days-and-randomise">
+            <div class="days-options">
+              <label><input type="radio" name="days" value="3"> 3 days</label>
+              <label><input type="radio" name="days" value="5" checked> 5 days</label>
+              <label><input type="radio" name="days" value="7"> 7 days</label>
             </div>
+            <button id="randomise-btn" class="link-btn" title="Randomise Meals"><span class="button-text">Randomise
+                meals</span><span class="material-symbols-outlined">casino</span></button>
+          </div>
         </div>
       </div>
       <div class="show-dates">
@@ -42,14 +46,15 @@
           Show dates
         </label>
         <div class="show-actions">
-              <button id="shopping-list-btn" class="link-btn" title="Shopping List"><span class="button-text">Shopping list</span><span class="material-symbols-outlined">task</span></button>
+          <button id="shopping-list-btn" class="link-btn" title="Shopping List"><span class="button-text">Shopping
+              list</span><span class="material-symbols-outlined">task</span></button>
         </div>
-    </div>
+      </div>
     </div>
 
     <!-- Right side: DB -->
     <div class="card">
-      <h2 id="db-title">Meal Database</h2> <!-- Replaced by dynamic label --> 
+      <h2 id="db-title">Meal Database</h2> <!-- Replaced by dynamic label -->
       <div class="db-controls">
         <input type="text" id="search-input" placeholder="Search meals or tags...">
         <label for="tag-filter">Filter by tag:</label>
@@ -79,61 +84,69 @@
       </div>
     </div>
 
-   <!-- Edit / Add modal -->
-   <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
-     <div class="modal-content">
-       <h3 id="modal-title">Edit Meal</h3>
-       <form id="meal-form">
-         <label>Name<input type="text" id="meal-name" placeholder="e.g., Chicken Fajitas" required></label>
-         <label>Tags (comma separated)<input type="text" id="meal-tags" placeholder="e.g., Mexican, Quick, Chicken"></label>
-         <label>Ingredients (comma separated)<input type="text" id="ingredients" placeholder="e.g., Chicken, Peppers, Onions"></label>
-         <label>Popularity <span id="pop-value">0.5</span>
+    <!-- Edit / Add modal -->
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <h3 id="modal-title">Edit Meal</h3>
+        <form id="meal-form">
+          <label>Name<input type="text" id="meal-name" placeholder="e.g., Chicken Fajitas" required></label>
+          <label>Tags (comma separated)<input type="text" id="meal-tags"
+              placeholder="e.g., Mexican, Quick, Chicken"></label>
+          <label>Ingredients (comma separated)<input type="text" id="ingredients"
+              placeholder="e.g., Chicken, Peppers, Onions"></label>
+          <label>Popularity <span id="pop-value">0.5</span>
             <input type="range" id="meal-pop" min="0" max="1" step="0.01" value="0.5">
-         </label>
-         <div class="modal-actions">
-           <button type="button" id="modal-cancel" class="btn">Cancel</button>
-           <button type="submit" id="modal-save" class="btn highlight-yellow"><span class="material-symbols-outlined">save</span><span class="button-text">Save</span></button>
-         </div>
-       </form>
-     </div>
-   </div>
+          </label>
+          <div class="modal-actions">
+            <button type="button" id="modal-cancel" class="btn">Cancel</button>
+            <button type="submit" id="modal-save" class="btn highlight-yellow"><span
+                class="material-symbols-outlined">save</span><span class="button-text">Save</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-   <!-- Export Format modal -->
-   <div id="export-modal" class="modal hidden" role="dialog" aria-modal="true">
-     <div class="modal-content">
-       <h3>Export Meals</h3>
-       <p class="modal-description">Choose a format to export your meals:</p>
-       <div class="modal-actions">
-         <button id="export-json-btn" class="btn highlight-yellow">
-           <span class="material-symbols-outlined">description</span>
-           <span class="button-text">JSON</span>
-         </button>
-         <button id="export-csv-btn" class="btn highlight-yellow">
-           <span class="material-symbols-outlined">table_chart</span>
-           <span class="button-text">CSV</span>
-         </button>
-         <button id="export-cancel" class="btn">Cancel</button>
-       </div>
-     </div>
-   </div>
+    <!-- Export Format modal -->
+    <div id="export-modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <h3>Export Meals</h3>
+        <p class="modal-description">Choose a format to export your meals:</p>
+        <div class="modal-actions">
+          <button id="export-json-btn" class="btn highlight-yellow">
+            <span class="material-symbols-outlined">description</span>
+            <span class="button-text">JSON</span>
+          </button>
+          <button id="export-csv-btn" class="btn highlight-yellow">
+            <span class="material-symbols-outlined">table_chart</span>
+            <span class="button-text">CSV</span>
+          </button>
+          <button id="export-cancel" class="btn">Cancel</button>
+        </div>
+      </div>
+    </div>
 
-   <!-- Shopping List modal -->
-   <div id="shopping-list-modal" class="modal hidden" role="dialog" aria-modal="true">
-     <div class="modal-content">
-       <h3>Shopping List</h3>
-       <p class="muted">Tick the items that you already have:</p>
-       <div id="shopping-list-items" class="shopping-list-items">
-         <!-- Ingredients will be inserted here -->
-       </div>
-       <div class="modal-actions">
-         <button id="shopping-list-close" class="btn">Close</button>
-       </div>
-     </div>
-   </div>
+    <!-- Shopping List modal -->
+    <div id="shopping-list-modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <h3>Shopping List</h3>
+        <p class="muted">Tick the items that you already have:</p>
+        <div id="shopping-list-items" class="shopping-list-items">
+          <!-- Ingredients will be inserted here -->
+        </div>
+        <div class="modal-actions">
+          <button id="shopping-list-copy" class="btn highlight-yellow"><span
+              class="material-symbols-outlined">content_copy</span><span class="button-text">Copy List</span></button>
+          <button id="shopping-list-calendar" class="btn highlight-yellow"><span
+              class="material-symbols-outlined">event</span><span class="button-text">Add to Calendar</span></button>
+          <button id="shopping-list-close" class="btn">Close</button>
+        </div>
+      </div>
+    </div>
 
-   <!-- Toast -->
-   <div id="toast" class="toast hidden"></div>
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
 
-   <script src="app.js"></script>
- </body>
+    <script src="app.js"></script>
+</body>
+
 </html>

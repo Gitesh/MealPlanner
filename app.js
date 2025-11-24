@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderDB(filter = '', tag = 'all') {
         dbList.innerHTML = '';
         const filteredMeals = meals.filter(meal => {
-            const matchesFilter = meal.name.toLowerCase().includes(filter.toLowerCase()) || 
-                                meal.tags.some(t => t.toLowerCase().includes(filter.toLowerCase()));
+            const matchesFilter = meal.name.toLowerCase().includes(filter.toLowerCase()) ||
+                meal.tags.some(t => t.toLowerCase().includes(filter.toLowerCase()));
             const matchesTag = tag === 'all' || meal.tags.includes(tag);
             return matchesFilter && matchesTag;
         });
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let date = new Date();
 
         const suggestions = new Set();
-        while(suggestions.size < count) {
+        while (suggestions.size < count) {
             const meal = weightedRandomSelect(meals);
             if (!suggestions.has(meal)) {
                 suggestions.add(meal);
@@ -142,13 +142,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openCalendarLink(mealName, eventDate) {
         eventDate.setHours(18, 0, 0, 0); // 6 PM
-        
+
         const pad = (n) => String(n).padStart(2, '0');
         const start = `${eventDate.getFullYear()}${pad(eventDate.getMonth() + 1)}${pad(eventDate.getDate())}T${pad(eventDate.getHours())}${pad(eventDate.getMinutes())}00`;
-        
+
         const endDate = new Date(eventDate.getTime() + 60 * 60 * 1000); // 1 hour duration
         const end = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
-        
+
         // Find the meal and get its ingredients
         const meal = meals.find(m => m.name === mealName);
         let details = `Meal planned: ${mealName}`;
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const ingredientsList = meal.ingredients.map(ing => `• ${ing}`).join('\n');
             details = `Meal planned: ${mealName}\n\nIngredients:\n${ingredientsList}`;
         }
-        
+
         const params = new URLSearchParams({
             action: 'TEMPLATE',
             text: mealName,
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sf: 'true',
             output: 'xml'
         });
-        
+
         const calendarUrl = `https://www.google.com/calendar/render?${params.toString()}`;
         window.open(calendarUrl, '_blank');
     }
@@ -270,9 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         addMeal();
     });
-    
+
     mealPopInput.addEventListener('input', () => popValue.textContent = mealPopInput.value);
-    
+
     document.querySelectorAll('input[name="days"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
             renderSuggestions(e.target.value);
@@ -398,54 +398,129 @@ document.addEventListener('DOMContentLoaded', () => {
         shoppingListModal.classList.add('hidden');
     });
 
+    // Use event delegation for dynamically visibility or potential timing issues
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#shopping-list-copy')) {
+            copyShoppingList();
+        }
+        if (e.target.closest('#shopping-list-calendar')) {
+            addShoppingListToCalendar();
+        }
+    });
+
     function generateShoppingList() {
         // Collect all ingredients from current suggestions
-        const ingredientSet = new Set();
+        const ingredientCounts = new Map();
         const suggestionCards = suggestionsList.querySelectorAll('.suggestion');
-        
+
         suggestionCards.forEach(card => {
             const mealName = card.querySelector('.meal-name').textContent;
             const meal = meals.find(m => m.name === mealName);
             if (meal && meal.ingredients && Array.isArray(meal.ingredients)) {
                 meal.ingredients.forEach(ingredient => {
                     if (ingredient.trim()) {
-                        ingredientSet.add(ingredient.trim());
+                        const name = ingredient.trim();
+                        ingredientCounts.set(name, (ingredientCounts.get(name) || 0) + 1);
                     }
                 });
             }
         });
 
         // Generate HTML for ingredients with checkboxes
-        if (ingredientSet.size === 0) {
+        if (ingredientCounts.size === 0) {
             shoppingListItems.innerHTML = '<p class="muted">No ingredients in current meal suggestions</p>';
         } else {
-            const ingredientsList = Array.from(ingredientSet).sort();
-            shoppingListItems.innerHTML = ingredientsList.map((ingredient, index) => `
+            const sortedIngredients = Array.from(ingredientCounts.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+            shoppingListItems.innerHTML = sortedIngredients.map(([ingredient, count]) => {
+                const countDisplay = count > 1 ? ` [${count}]` : '';
+                return `
                 <label class="shopping-list-item">
                     <input type="checkbox" class="ingredient-checkbox" data-ingredient="${ingredient}">
-                    <span>${ingredient}</span>
+                    <span>${ingredient}${countDisplay}</span>
                 </label>
-            `).join('');
+            `}).join('');
         }
 
         shoppingListModal.classList.remove('hidden');
     }
 
+    function toStrikethrough(text) {
+        return text.split('').map(char => char + '\u0336').join('');
+    }
+
+    function getFormattedShoppingListText() {
+        const items = [];
+        shoppingListItems.querySelectorAll('.shopping-list-item').forEach(label => {
+            const checkbox = label.querySelector('input');
+            const span = label.querySelector('span');
+            items.push({
+                text: span.textContent,
+                checked: checkbox.checked
+            });
+        });
+
+        // Sort: Unchecked first, then alphabetical
+        items.sort((a, b) => {
+            if (a.checked === b.checked) {
+                return a.text.localeCompare(b.text);
+            }
+            return a.checked ? 1 : -1;
+        });
+
+        return items.map(item => {
+            let text = item.text;
+            if (item.checked) {
+                text = toStrikethrough(text);
+            }
+            return `• ${text}`;
+        }).join('\n');
+    }
+
+    function copyShoppingList() {
+        const listText = getFormattedShoppingListText();
+        if (!navigator.clipboard) {
+            showToast('Clipboard access not supported');
+            return;
+        }
+        navigator.clipboard.writeText(listText).then(() => {
+            showToast('Shopping list copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            showToast('Failed to copy to clipboard');
+        });
+    }
+
+    function addShoppingListToCalendar() {
+        const listText = getFormattedShoppingListText();
+        const details = `Shopping List:\n\n${listText}`;
+
+        const params = new URLSearchParams({
+            action: 'TEMPLATE',
+            text: 'Shopping List',
+            details: details,
+            sf: 'true',
+            output: 'xml'
+        });
+
+        const calendarUrl = `https://www.google.com/calendar/render?${params.toString()}`;
+        window.open(calendarUrl, '_blank');
+    }
+
     function parseCSV(text) {
         const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
         if (lines.length < 2) return [];
-        
+
         const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim().toLowerCase());
         const nameIdx = headers.indexOf('name');
         const tagsIdx = headers.indexOf('tags');
         const popIdx = headers.indexOf('popularity');
         const ingredientsIdx = headers.indexOf('ingredients');
-        
+
         const result = [];
         for (let i = 1; i < lines.length; i++) {
             const values = lines[i].match(/(?:"[^"]*"|[^,])+/g) || [];
             const row = values.map(v => v.replace(/^"|"$/g, '').trim());
-            
+
             result.push({
                 name: row[nameIdx] || row[0] || `Row ${i}`,
                 tags: (row[tagsIdx] || '').split(';').map(t => t.trim()).filter(Boolean),
@@ -459,13 +534,13 @@ document.addEventListener('DOMContentLoaded', () => {
     importFile.addEventListener('change', e => {
         const file = e.target.files[0];
         if (!file) return;
-        
+
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
                 const text = event.target.result;
                 let importedMeals = [];
-                
+
                 // Auto-detect format by file extension
                 if (file.name.toLowerCase().endsWith('.json')) {
                     importedMeals = JSON.parse(text);
@@ -479,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showToast('Unsupported file format. Use .json or .csv');
                     return;
                 }
-                
+
                 if (Array.isArray(importedMeals)) {
                     meals = importedMeals.map((meal, index) => ({ id: `m${index}`, ...meal }));
                     updateAllTags();
