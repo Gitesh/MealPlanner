@@ -588,4 +588,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showDatesToggle.addEventListener('change', updateDateVisibility);
 
+    // Exit Intent Detection
+    let exitIntentShown = false;
+    document.addEventListener('mouseout', (e) => {
+        if (exitIntentShown) return;
+
+        // Check if mouse left the window from the top
+        if (e.clientY <= 0) {
+            exitIntentShown = true;
+            exportModal.classList.remove('hidden');
+        }
+    });
+
 });
