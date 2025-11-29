@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderSuggestions(count) {
         suggestionsList.innerHTML = '';
-        suggestionsTitle.textContent = `${count}-Day Meal Suggestions`;
+        suggestionsTitle.textContent = `${count}-Day Meal Plan`;
         let date = new Date();
 
         const suggestions = new Set();
@@ -162,10 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="day">${date.getDate()}</div>
                   <div class="month-day">${date.toLocaleString('default', { weekday: 'short' })} ${date.toLocaleString('default', { month: 'short' })}</div>
                 </div>
-                <span class="meal-name">${meal.name}</span>
-                <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${buttonDate.toISOString()}">
-                  <span class="material-symbols-outlined">event</span><span class="calendar-text"> Add to Calendar</span>
-                </button>
+                <div class="suggestion-info">
+                    <span class="meal-name">${meal.name}</span>
+                </div>
+                <div class="suggestion-action">
+                    <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${buttonDate.toISOString()}">
+                    <span class="material-symbols-outlined">event</span>
+                    </button>
+                </div>
             `;
             suggestionsList.appendChild(suggestionEl);
             date.setDate(date.getDate() + 1);
