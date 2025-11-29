@@ -1,12 +1,12 @@
 :root {
   --primary: #6c5ce7;
-  --secondary: #a29bfe;
+  --secondary: #e2dff7;
   --background: #fff;
   --text-primary: #333;
   --text-secondary: #666;
   --card-bg: #f2f0ff;
   --card-border: #e0e0e0;
-  --highlight-teal: #00b894;
+  --highlight-teal: #5600b8;
   --highlight-yellow: #fdcb6e;
   --btn-bg: #f0f0f0;
   --btn-hover-bg: #e0e0e0;
@@ -290,7 +290,7 @@ body {
   align-items: flex-start;
   padding: 0.6rem;
   background-color: #fff;
-  border: 1px solid #eee;
+  border: 2px solid #eee;
   border-radius: 6px;
   flex-shrink: 0;
   position: relative;
@@ -319,7 +319,10 @@ body {
 .meal-meta {
   font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-top: 0.1rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 4px;
 }
 
 .tag {
