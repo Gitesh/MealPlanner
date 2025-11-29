@@ -1,13 +1,331 @@
 [
-  { "name": "Tuna Pasta Bake", "tags": ["pasta", "fish", "baked"], "popularity": 0.8, "ingredients": ["tuna", "pasta", "cheese"] },
-  { "name": "Satay Chicken Skewers", "tags": ["quick", "asian"], "popularity": 0.9, "ingredients": ["chicken", "satay sauce", "skewers"] },
-  { "name": "Butternut Squash Risotto", "tags": ["vegetarian", "italian"], "popularity": 0.7, "ingredients": ["butternut squash", "rice", "parmesan"] },
-  { "name": "Leek & Potato Soup", "tags": ["vegetarian", "soup", "quick"], "popularity": 0.6, "ingredients": ["leeks", "potatoes", "vegetable stock"] },
-  { "name": "Classic Fish Pie", "tags": ["fish", "comfort"], "popularity": 0.75, "ingredients": ["fish", "potatoes", "milk"] },
-  { "name": "Spaghetti Bolognese", "tags": ["pasta", "italian", "lamb"], "popularity": 0.95, "ingredients": ["spaghetti", "lamb", "tomato sauce"] },
-  { "name": "Chicken Fajitas", "tags": ["mexican", "quick"], "popularity": 0.85, "ingredients": ["chicken", "peppers", "tortillas"] },
-  { "name": "Lentil Shepherd's Pie", "tags": ["vegetarian", "vegan", "comfort"], "popularity": 0.65, "ingredients": ["lentils", "potatoes", "carrots"] },
-  { "name": "Salmon with Roasted Veg", "tags": ["fish", "healthy", "baked"], "popularity": 0.8, "ingredients": ["salmon", "vegetables", "olive oil"] },
-  { "name": "Chicken Shak", "tags": ["indian", "mild", "chicken"], "popularity": 0.2, "ingredients": ["chicken", "spices", "yogurt"] },
-  { "name": "Thai Green Curry", "tags": ["asian", "spicy", "chicken"], "popularity": 0.9, "ingredients": ["chicken", "curry paste", "coconut milk"] }
+  {
+    "id": "m0",
+    "name": "Tuna Pasta Bake",
+    "tags": [
+      "pasta",
+      "fish",
+      "baked"
+    ],
+    "popularity": 0.8,
+    "ingredients": [
+      "tuna",
+      "pasta",
+      "cheese"
+    ]
+  },
+  {
+    "id": "m1",
+    "name": "Satay Chicken Skewers",
+    "tags": [
+      "quick",
+      "asian"
+    ],
+    "popularity": 0.9,
+    "ingredients": [
+      "chicken",
+      "satay sauce",
+      "skewers"
+    ]
+  },
+  {
+    "id": "m2",
+    "name": "Butternut Squash Risotto",
+    "tags": [
+      "vegetarian",
+      "italian"
+    ],
+    "popularity": 0.7,
+    "ingredients": [
+      "butternut squash",
+      "rice",
+      "parmesan"
+    ]
+  },
+  {
+    "id": "m3",
+    "name": "Leek & Potato Soup",
+    "tags": [
+      "vegetarian",
+      "soup",
+      "quick"
+    ],
+    "popularity": 0.6,
+    "ingredients": [
+      "leeks",
+      "potatoes",
+      "vegetable stock"
+    ]
+  },
+  {
+    "id": "m4",
+    "name": "Classic Fish Pie",
+    "tags": [
+      "fish",
+      "comfort"
+    ],
+    "popularity": 0.75,
+    "ingredients": [
+      "fish",
+      "potatoes",
+      "milk"
+    ]
+  },
+  {
+    "id": "m5",
+    "name": "Spaghetti Bolognese",
+    "tags": [
+      "pasta",
+      "italian",
+      "lamb"
+    ],
+    "popularity": 0.95,
+    "ingredients": [
+      "spaghetti",
+      "lamb",
+      "tomato sauce"
+    ]
+  },
+  {
+    "id": "m6",
+    "name": "Chicken Fajitas",
+    "tags": [
+      "mexican",
+      "quick"
+    ],
+    "popularity": 0.85,
+    "ingredients": [
+      "chicken",
+      "peppers",
+      "tortillas"
+    ]
+  },
+  {
+    "id": "m7",
+    "name": "Lentil Shepherd's Pie",
+    "tags": [
+      "vegetarian",
+      "vegan",
+      "comfort"
+    ],
+    "popularity": 0.65,
+    "ingredients": [
+      "lentils",
+      "potatoes",
+      "carrots"
+    ]
+  },
+  {
+    "id": "m8",
+    "name": "Salmon with Roasted Veg",
+    "tags": [
+      "fish",
+      "healthy",
+      "baked"
+    ],
+    "popularity": 0.8,
+    "ingredients": [
+      "salmon",
+      "vegetables",
+      "olive oil"
+    ]
+  },
+  {
+    "id": "m9",
+    "name": "Chicken Shak",
+    "tags": [
+      "indian",
+      "mild",
+      "chicken"
+    ],
+    "popularity": 0.2,
+    "ingredients": [
+      "chicken",
+      "spices",
+      "yogurt"
+    ]
+  },
+  {
+    "id": "m10",
+    "name": "Thai Green Curry",
+    "tags": [
+      "asian",
+      "spicy",
+      "chicken"
+    ],
+    "popularity": 0.9,
+    "ingredients": [
+      "chicken",
+      "curry paste",
+      "coconut milk"
+    ]
+  },
+  {
+    "id": "m11",
+    "name": "Chicken Breast Biryani with Yoghurt",
+    "tags": [
+      "Chicken",
+      "30 min",
+      "oven",
+      "indian"
+    ],
+    "popularity": 0.28,
+    "ingredients": [
+      "Chicken",
+      "tomatoes",
+      "butternut squash",
+      "green chilli",
+      "yoghurt",
+      "rice",
+      "cardomom pods",
+      "chicken stock mix",
+      "crispy onions"
+    ]
+  },
+  {
+    "id": "m12",
+    "name": "Lamb Biryani",
+    "tags": [
+      "Lamb",
+      "20 Mins",
+      "rice",
+      "indian"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "onions",
+      "lamb",
+      "yoghurt",
+      "green beans",
+      "sultanas",
+      "rice",
+      "chicken stock"
+    ]
+  },
+  {
+    "id": "m13",
+    "name": "Sesame Katsu with Rice",
+    "tags": [
+      "Japanese",
+      "Chicken",
+      "40 mins"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Shallot",
+      "lime",
+      "soy sauce",
+      "baby leaf salad",
+      "carrots",
+      "sesame seeds",
+      "chicken brest",
+      "spring onion",
+      "mango chutney",
+      "rice",
+      "blanched edamame beans"
+    ]
+  },
+  {
+    "id": "m14",
+    "name": "Chicken Katsu Curry with Pickled Ginger Salad",
+    "tags": [
+      "Chicken",
+      "Japanese",
+      "40 min"
+    ],
+    "popularity": 0.81,
+    "ingredients": [
+      "brown onions",
+      "egg",
+      "soy sauce",
+      "sushi rice",
+      "chicken brest",
+      "panko breadcrumbs",
+      "curry powder",
+      "gem lettuce",
+      "garlic clove",
+      "red wine vinegar",
+      "solid creamed coconut",
+      "ginger",
+      "tumeric"
+    ]
+  },
+  {
+    "id": "m15",
+    "name": "Tortollini pasta",
+    "tags": [
+      "Italian",
+      "15 min"
+    ],
+    "popularity": 0.76,
+    "ingredients": [
+      "Tortollini",
+      "pasta sauce",
+      "fresh herbs"
+    ]
+  },
+  {
+    "id": "m16",
+    "name": "Tuna Pasta",
+    "tags": [
+      "Fish",
+      "Italian",
+      "Pasta",
+      "15 mins"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Tuna",
+      "pasta",
+      "pasta sauce",
+      "peas",
+      "sweetcorn"
+    ]
+  },
+  {
+    "id": "m17",
+    "name": "Haddock with Sticky Rice and Cruchy Salad",
+    "tags": [
+      "Vietnamese",
+      "40 min"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Lime",
+      "garlic",
+      "mint",
+      "soy sauce",
+      "sushi rice",
+      "haddock bites",
+      "gem lettuce",
+      "cucumber",
+      "carrot",
+      "sesame seeds",
+      "dried chilli",
+      "ginger"
+    ]
+  },
+  {
+    "id": "m18",
+    "name": "Leftovers",
+    "tags": [],
+    "popularity": 0.5,
+    "ingredients": []
+  },
+  {
+    "id": "m19",
+    "name": "Fish Shak",
+    "tags": [
+      "Fish",
+      "indian",
+      "30 min"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "White fish",
+      "onions",
+      "potatoes",
+      "chapati"
+    ]
+  }
 ]

@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('meals_db.json')
         .then(response => response.json())
         .then(data => {
-            meals = data.map((meal, index) => ({ id: `m${index}`, ...meal }));
+            meals = data.map((meal, index) => ({ id: `m${index}`, ...normalizeMeal(meal) }));
             updateAllTags();
             updateAllTags();
             renderDB();
@@ -47,6 +47,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
+
+    function toTitleCase(str) {
+        const minorWords = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'by', 'with', 'in', 'of']);
+        return str.replace(/\w\S*/g, (txt, offset) => {
+            if (offset > 0 && minorWords.has(txt.toLowerCase())) {
+                return txt.toLowerCase();
+            }
+            return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+        });
+    }
+
+    function toSentenceCase(str) {
+        if (!str) return '';
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    const REGIONS = new Map([
+        'Italian', 'Indian', 'Chinese', 'Japanese', 'Thai', 'Mexican', 'French', 'Greek', 'Spanish',
+        'American', 'Korean', 'Vietnamese', 'Mediterranean', 'British', 'German', 'Turkish', 'Lebanese',
+        'Caribbean', 'Cajun', 'Creole', 'Asian', 'European', 'African', 'Middle Eastern', 'Moroccan',
+        'Brazilian', 'Peruvian', 'Russian', 'Swedish', 'Irish', 'Scottish', 'Welsh', 'Australian', 'Canadian',
+        'India', 'Italy', 'China', 'Japan', 'Thailand', 'Mexico', 'France', 'Greece', 'Spain', 'USA', 'UK',
+        'Germany', 'Turkey', 'Lebanon', 'Vietnam', 'Korea', 'Brazil', 'Peru', 'Russia', 'Sweden', 'English'
+    ].map(r => [r.toLowerCase(), r]));
+
+    function formatTag(tag) {
+        const lower = tag.trim().toLowerCase();
+        return REGIONS.get(lower) || lower;
+    }
+
+    function sortTags(tags) {
+        return tags.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+    }
+
+    function normalizeMeal(meal) {
+        const tags = (meal.tags || []).map(t => formatTag(t)).filter(Boolean);
+        return {
+            ...meal,
+            name: toTitleCase(meal.name || ''),
+            tags: sortTags(tags),
+            ingredients: (meal.ingredients || []).map(i => toSentenceCase(i.trim())).filter(Boolean)
+        };
+    }
 
     function updateAllTags() {
         allTags.clear();
@@ -192,14 +235,16 @@ document.addEventListener('DOMContentLoaded', () => {
         popValue.textContent = meal.popularity;
         document.getElementById('ingredients').value = (meal.ingredients || []).join(', ');
     }
-
     // Function to handle adding a new meal
     function addMeal() {
-        const name = mealNameInput.value.trim();
-        if (!name) return;
-        const tags = mealTagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
+        const rawName = mealNameInput.value.trim();
+        if (!rawName) return;
+
+        const name = toTitleCase(rawName);
+        let tags = mealTagsInput.value.split(',').map(t => formatTag(t)).filter(Boolean);
+        tags = sortTags(tags);
         const popularity = parseFloat(mealPopInput.value);
-        const ingredients = document.getElementById('ingredients').value.split(',').map(ingredient => ingredient.trim());
+        const ingredients = document.getElementById('ingredients').value.split(',').map(i => toSentenceCase(i.trim())).filter(Boolean);
 
         if (editingMealId) {
             // Update existing meal
@@ -559,7 +604,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (Array.isArray(importedMeals)) {
-                    meals = importedMeals.map((meal, index) => ({ id: `m${index}`, ...meal }));
+                    meals = importedMeals.map((meal, index) => ({ id: `m${index}`, ...normalizeMeal(meal) }));
                     updateAllTags();
                     renderDB();
                     renderSuggestions(document.querySelector('input[name="days"]:checked').value);
