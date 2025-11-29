@@ -63,7 +63,7 @@ Looking for something specific? Use our powerful search to filter by meal names 
 
 ###  Shopping List Generator
 One click generates your complete shopping list from your meal plan! Watch as you tick off items you already have, copy the list to your clipboard, or add everything directly to your calendar. Meal prep has never been easier!
-![Shopping List Modal](screenshots\shopping_list.png)
+![Shopping List Modal](screenshots/shopping_list.png)
 
 ---
 
