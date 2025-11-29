@@ -3,71 +3,21 @@
 **Plan your week, one delicious meal at a time.**
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://gitesh.github.io/MealPlanner/)
-[![Made with Love](https://img.shields.io/badge/made%20with-❤️-red)](https://gitesh.github.io/MealPlanner/)
 
-Say goodbye to the dreaded "What's for dinner?" question! **Simple Meal Planner** is your personal meal planning companion that makes weekly meal organisation effortless, fun, and flexible. Whether you're planning for 3 days or a whole week, we've got you covered! 🎯
+
+Say goodbye to the dreaded "What's for dinner?" question! **Simple Meal Planner** is your personal meal planning companion that makes weekly meal organisation effortless, fun, and flexible. Whether you're planning for 3 days or a whole week, we've got you covered! 
 
 ---
 
 ##  Why You'll Love It
 
-- ** Smart Randomisation**: Tired of eating the same things? Let our intelligent algorithm surprise you with meal suggestions based on popularity scores!
-- ** Drag & Drop Magic**: Don't like a suggestion? Simply drag and drop any meal from your database to replace it instantly!
-- ** Instant Shopping Lists**: Generate comprehensive shopping lists with one click - complete with calendar integration!
-- ** Powerful Search**: Find meals by name or tags in seconds
-- ** Your Data, Your Way**: Import and export your meal database in JSON or CSV format
-- ** Beautiful & Responsive**: Works seamlessly on desktop, tablet, and mobile devices
-- ** Lightning Fast**: No sign-ups, no servers, runs entirely in your browser!
-
----
-
-##  See It In Action
-
-###  Main Interface - Your Weekly Meal Hub
-
-![Main Interface](./screenshots/main_interface.webp)
-
-The clean, intuitive interface shows your weekly meal plan on the left and your entire meal database on the right. Choose between 3, 5, or 7-day plans and customise them to your heart's content! Watch as dates instantly appear when you toggle the "Show dates" option!
-
----
-
-###  Smart Meal Randomisation
-
-![Randomise Meals](./screenshots/randomize_meals.webp)
-
-Don't like the suggested meals? Just hit that randomise button and watch your entire meal plan transform! The intelligent algorithm uses popularity scores to suggest meals you'll love.
-
----
-
-###  Smart Search & Filtering
-
-![Search Functionality](./screenshots/search_filter.webp)
-
-Looking for something specific? Use our powerful search to filter by meal names or tags like "Mexican", "Quick", "Vegetarian" - watch the results update in real-time as you type!
-
----
-
-###  Shopping List Generator
-
-![Shopping List Modal](./screenshots/shopping_list.webp)
-
-One click generates your complete shopping list from your meal plan! Watch as you tick off items you already have, copy the list to your clipboard, or add everything directly to your calendar. Meal prep has never been easier! 📋
-
----
-
-###  Easy Meal Management
-
-![Add/Edit Meal Modal](./screenshots/add_meal.webp)
-
-Adding new meals is a breeze! Watch as we create "Vegetable Curry" - just enter the name, tags, ingredients, and set a popularity score. The meal instantly appears in your database! ⭐
-
----
-
-###  Drag & Drop Customisation
-
-![Drag and Drop](./screenshots/drag_and_drop.webp)
-
-Not feeling the suggested meal? No problem! Watch as we drag a meal from the database and drop it to replace any day's meal. It's that simple! 🖱️✨
+- **Smart Randomisation**: Tired of eating the same things? Let our intelligent algorithm surprise you with meal suggestions based on popularity scores.
+- **Drag & Drop Magic**: Don't like a suggestion? Simply drag and drop any meal from your database to replace it instantly.
+- **Instant Shopping Lists**: Generate comprehensive shopping lists with one click - complete with calendar integration!
+- **Powerful Search**: Find meals by name or tags in seconds
+- **Your Data, Your Way**: Import and export your meal database in JSON or CSV format
+- **Beautiful & Responsive**: Works seamlessly on desktop, tablet, and mobile devices
+- **Lightning Fast**: No sign-ups, no servers, runs entirely in your browser!
 
 ---
 
@@ -78,8 +28,58 @@ It's incredibly simple:
 1. **Visit**: [https://gitesh.github.io/MealPlanner/](https://gitesh.github.io/MealPlanner/)
 2. **Explore**: The app comes pre-loaded with example meals
 3. **Customise**: Add your own favourite meals to the database
-4. **Plan**: Generate a meal plan for 3, 5, or 7 days
-5. **Shop**: Create your shopping list and start cooking!
+4. **Plan**: Generate a meal plan for 3, 5, or 7 days. Search / filter meals by tag, then drag from the list on the right to replace a meal
+5. **Organise**: Click the calendar icon to add the meal to your calendar
+6. **Shop**: Create your shopping list and start cooking!
+
+---
+
+
+
+
+##  See It In Action
+
+###  Main Interface - Your Weekly Meal Hub
+The clean, intuitive interface shows your weekly meal plan on the left and your entire meal database on the right. Choose between 3, 5, or 7-day plans and customise them to your heart's content! Watch as dates instantly appear when you toggle the "Show dates" option!
+![Main Interface](./screenshots/main_interface.webp)
+
+---
+
+###  Smart Meal Randomisation
+
+<!-- ![Randomise Meals](./screenshots/randomize_meals.webp) -->
+
+Don't like the suggested meals? Just hit that randomise button and watch your entire meal plan transform! The intelligent algorithm uses popularity scores to suggest meals you'll love.
+
+---
+
+###  Smart Search & Filtering
+
+<!-- ![Search Functionality](./screenshots/search_filter.webp) -->
+
+Looking for something specific? Use our powerful search to filter by meal names or tags like "Mexican", "Quick", "Vegetarian" - watch the results update in real-time as you type!
+
+---
+
+###  Shopping List Generator
+One click generates your complete shopping list from your meal plan! Watch as you tick off items you already have, copy the list to your clipboard, or add everything directly to your calendar. Meal prep has never been easier!
+![Shopping List Modal](screenshots\shopping_list.png)
+
+---
+
+###  Easy Meal Management
+
+<!-- ![Add/Edit Meal Modal](./screenshots/add_meal.webp) -->
+
+Adding new meals is a breeze! Watch as we create "Vegetable Curry" - just enter the name, tags, ingredients, and set a popularity score. The meal instantly appears in your database!
+
+---
+
+###  Drag & Drop Customisation
+Not feeling the suggested meal? No problem! Watch as we drag a meal from the database and drop it to replace any day's meal. It's that simple! 
+![Drag and Drop](./screenshots/drag_and_drop.webp)
+
+
 
 ---
 
@@ -150,11 +150,11 @@ We believe meal planning should be **joyful, not a chore**. That's why Simple Me
 
 ##  Perfect For
 
-- 🏠 **Busy Families**: Plan meals for the whole week in minutes
-- 👨‍🍳 **Home Cooks**: Keep track of your recipe repertoire
-- 💪 **Meal Preppers**: Organise your weekly prep sessions
-- 🎓 **Students**: Budget-friendly meal planning
-- 🥗 **Health Enthusiasts**: Track and plan nutritious meals
+- **Busy Families**: Plan meals for the whole week in minutes
+- **Home Cooks**: Keep track of your recipe repertoire
+- **Meal Preppers**: Organise your weekly prep sessions
+- **Students**: Budget-friendly meal planning
+- **Health Enthusiasts**: Track and plan nutritious meals
 
 ---
 
