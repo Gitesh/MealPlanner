@@ -505,7 +505,7 @@ body {
 
 .suggestion-date .month-day {
   font-size: 0.75rem;
-  line-height: 1;
+  line-height: 2;
 }
 
 .shopping-list-items {
