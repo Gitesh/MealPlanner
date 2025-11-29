@@ -9,21 +9,21 @@ Say goodbye to the dreaded "What's for dinner?" question! **Simple Meal Planner*
 
 ---
 
-## ✨ Why You'll Love It
+##  Why You'll Love It
 
-- **🎲 Smart Randomisation**: Tired of eating the same things? Let our intelligent algorithm surprise you with meal suggestions based on popularity scores!
-- **🎨 Drag & Drop Magic**: Don't like a suggestion? Simply drag and drop any meal from your database to replace it instantly!
-- **🛒 Instant Shopping Lists**: Generate comprehensive shopping lists with one click - complete with calendar integration!
-- **🔍 Powerful Search**: Find meals by name or tags in seconds
-- **💾 Your Data, Your Way**: Import and export your meal database in JSON or CSV format
-- **📱 Beautiful & Responsive**: Works seamlessly on desktop, tablet, and mobile devices
-- **⚡ Lightning Fast**: No sign-ups, no servers, runs entirely in your browser!
+- ** Smart Randomisation**: Tired of eating the same things? Let our intelligent algorithm surprise you with meal suggestions based on popularity scores!
+- ** Drag & Drop Magic**: Don't like a suggestion? Simply drag and drop any meal from your database to replace it instantly!
+- ** Instant Shopping Lists**: Generate comprehensive shopping lists with one click - complete with calendar integration!
+- ** Powerful Search**: Find meals by name or tags in seconds
+- ** Your Data, Your Way**: Import and export your meal database in JSON or CSV format
+- ** Beautiful & Responsive**: Works seamlessly on desktop, tablet, and mobile devices
+- ** Lightning Fast**: No sign-ups, no servers, runs entirely in your browser!
 
 ---
 
-## 🎬 See It In Action
+##  See It In Action
 
-### 📅 Main Interface - Your Weekly Meal Hub
+###  Main Interface - Your Weekly Meal Hub
 
 ![Main Interface](./screenshots/main_interface.webp)
 
@@ -31,7 +31,7 @@ The clean, intuitive interface shows your weekly meal plan on the left and your 
 
 ---
 
-### 🎲 Smart Meal Randomisation
+###  Smart Meal Randomisation
 
 ![Randomise Meals](./screenshots/randomize_meals.webp)
 
@@ -39,7 +39,7 @@ Don't like the suggested meals? Just hit that randomise button and watch your en
 
 ---
 
-### 🔍 Smart Search & Filtering
+###  Smart Search & Filtering
 
 ![Search Functionality](./screenshots/search_filter.webp)
 
@@ -47,7 +47,7 @@ Looking for something specific? Use our powerful search to filter by meal names 
 
 ---
 
-### 🛒 Shopping List Generator
+###  Shopping List Generator
 
 ![Shopping List Modal](./screenshots/shopping_list.webp)
 
@@ -55,7 +55,7 @@ One click generates your complete shopping list from your meal plan! Watch as yo
 
 ---
 
-### ➕ Easy Meal Management
+###  Easy Meal Management
 
 ![Add/Edit Meal Modal](./screenshots/add_meal.webp)
 
@@ -63,7 +63,7 @@ Adding new meals is a breeze! Watch as we create "Vegetable Curry" - just enter 
 
 ---
 
-### 🎯 Drag & Drop Customisation
+###  Drag & Drop Customisation
 
 ![Drag and Drop](./screenshots/drag_and_drop.webp)
 
@@ -71,7 +71,7 @@ Not feeling the suggested meal? No problem! Watch as we drag a meal from the dat
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 It's incredibly simple:
 
@@ -83,36 +83,36 @@ It's incredibly simple:
 
 ---
 
-## 🎯 Key Features
+##  Key Features
 
 ### Meal Planning
-- 📊 **Flexible Plans**: Choose 3, 5, or 7-day meal plans
-- 🎲 **Smart Randomisation**: Weighted algorithm favours your most popular meals
-- 📅 **Optional Dates**: Toggle date display for your meal plan
-- 🔄 **Instant Refresh**: Don't like the plan? Randomise again instantly!
+-  **Flexible Plans**: Choose 3, 5, or 7-day meal plans
+-  **Smart Randomisation**: Weighted algorithm favours your most popular meals
+-  **Optional Dates**: Toggle date display for your meal plan
+-  **Instant Refresh**: Don't like the plan? Randomise again instantly!
 
 ### Meal Database
-- ➕ **Add/Edit/Delete**: Full CRUD operations on your meal collection
-- 🏷️ **Tag System**: Organise meals by cuisine, cooking time, dietary preferences, etc.
-- ⭐ **Popularity Ratings**: Rate meals from 0-1 to influence randomisation
-- 🔍 **Search & Filter**: Find meals quickly by name or tag
-- 📝 **Ingredients Tracking**: Store ingredient lists for each meal
+-  **Add/Edit/Delete**: Full CRUD operations on your meal collection
+-  **Tag System**: Organise meals by cuisine, cooking time, dietary preferences, etc.
+-  **Popularity Ratings**: Rate meals from 0-1 to influence randomisation
+-  **Search & Filter**: Find meals quickly by name or tag
+-  **Ingredients Tracking**: Store ingredient lists for each meal
 
 ### Shopping Lists
-- 📋 **Auto-Generation**: Creates shopping lists from your meal plan
-- ✅ **Interactive Checkboxes**: Mark items you already have
-- 📋 **Copy to Clipboard**: One-click copy for easy sharing
-- 📅 **Calendar Integration**: Add meals directly to your calendar with ingredients
+-  **Auto-Generation**: Creates shopping lists from your meal plan
+-  **Interactive Checkboxes**: Mark items you already have
+-  **Copy to Clipboard**: One-click copy for easy sharing
+-  **Calendar Integration**: Add meals directly to your calendar with ingredients
 
 ### Data Management
-- 💾 **Export Options**: Download your meals as JSON or CSV
-- 📤 **Import Support**: Upload previously exported data
-- 🔒 **Browser Storage**: All data saved locally - your privacy is guaranteed
-- 📱 **No Account Needed**: Use immediately without sign-up
+-  **Export Options**: Download your meals as JSON or CSV
+-  **Import Support**: Upload previously exported data
+-  **Browser Storage**: All data saved locally - your privacy is guaranteed
+-  **No Account Needed**: Use immediately without sign-up
 
 ---
 
-## 🛠️ Technical Highlights
+##  Technical Highlights
 
 Built with modern web technologies for maximum performance and simplicity:
 
@@ -136,19 +136,19 @@ Built with modern web technologies for maximum performance and simplicity:
 
 ---
 
-## 🎨 Design Philosophy
+##  Design Philosophy
 
 We believe meal planning should be **joyful, not a chore**. That's why Simple Meal Planner features:
 
-- 🌈 **Vibrant Colour Palette**: Eye-catching gradients and modern colours
-- ✨ **Smooth Animations**: Delightful micro-interactions throughout
-- 🎯 **Intuitive UX**: Everything is where you expect it to be
-- 📱 **Mobile-First**: Designed for thumbs and fingers, not just mice
-- 🌙 **Easy on the Eyes**: Balanced contrast and readable typography
+-  **Vibrant Colour Palette**: Eye-catching gradients and modern colours
+-  **Smooth Animations**: Delightful micro-interactions throughout
+-  **Intuitive UX**: Everything is where you expect it to be
+-  **Mobile-First**: Designed for thumbs and fingers, not just mice
+-  **Easy on the Eyes**: Balanced contrast and readable typography
 
 ---
 
-## 📱 Perfect For
+##  Perfect For
 
 - 🏠 **Busy Families**: Plan meals for the whole week in minutes
 - 👨‍🍳 **Home Cooks**: Keep track of your recipe repertoire
@@ -158,7 +158,7 @@ We believe meal planning should be **joyful, not a chore**. That's why Simple Me
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Found a bug? Have a feature idea? Contributions are welcome! Feel free to:
 
@@ -169,19 +169,19 @@ Found a bug? Have a feature idea? Contributions are welcome! Feel free to:
 
 ---
 
-## 🌟 Try It Now!
+##  Try It Now!
 
 Ready to revolutionise your meal planning? 
 
 ### 👉 [Launch Simple Meal Planner](https://gitesh.github.io/MealPlanner/) 👈
 
-No installation, no sign-up, just simple meal planning at your fingertips! 🎉
+No installation, no sign-up, just simple meal planning at your fingertips! 
 
 ---
 
 <div align="center">
 
-**Made with ❤️ and lots of good food in mind**
+**Made with lots of good food in mind**
 
 [Live Demo](https://gitesh.github.io/MealPlanner/) • [Report Bug](https://github.com/gitesh/MealPlanner/issues) • [Request Feature](https://github.com/gitesh/MealPlanner/issues)
 
