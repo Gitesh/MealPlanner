@@ -1,15 +1,29 @@
 :root {
-  --primary: #6c5ce7;
+  /* --primary: #258292;
   --secondary: #e2dff7;
-  --background: #fff;
+  --background: #1b2a2d;
   --text-primary: #333;
   --text-secondary: #666;
   --card-bg: #f2f0ff;
   --card-border: #e0e0e0;
-  --highlight-teal: #5600b8;
+  --highlight-teal: #1e7281;
+  --highlight-yellow: #fdcb6e;
+  --btn-bg: #f0f0f0;
+  --btn-hover-bg: #e0e0e0; */
+
+  --primary: #471323;
+  --secondary: #5B2E48;
+  --background: #471323;
+  --text-primary: #471323;
+  --text-secondary: #5B2E48;
+  --text-tertiary: #73937e;
+  --card-bg: #ceb992;
+  --card-border: #5b2e48;
+  --highlight-teal: #585563;
   --highlight-yellow: #fdcb6e;
   --btn-bg: #f0f0f0;
   --btn-hover-bg: #e0e0e0;
+
 }
 
 .material-symbols-outlined {
@@ -29,7 +43,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .app-header {
@@ -37,19 +51,23 @@ body {
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
-  color: var(--primary);
+  /* color: var(--primary); */
+  color: var(--card-bg);
 }
 
 .title h1 {
   margin: 0;
   font-size: 1.6rem;
+  text-align: center;
   font-weight: 700;
+  color: var(--card-bg);
 }
 
 .title p {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  /* font-weight: bold; */
+  color: var(--text-tertiary);
 }
 
 .container {
@@ -59,6 +77,12 @@ body {
   width: 100%;
   max-width: 1100px;
 }
+
+.container.expanded {
+  grid-template-columns: 25rem 1fr;
+  max-width: none;
+}
+
 
 @media (min-width: 900px) {
   .container {
@@ -85,8 +109,8 @@ body {
 }
 
 .muted {
-  color: var(--text-secondary);
-  font-size: 0.8rem;
+  color: var(--text-primary);
+  /* font-size: 0.8rem; */
   margin-bottom: 0.75rem;
 }
 
@@ -258,6 +282,12 @@ body {
   gap: 0.3rem;
   cursor: pointer;
   font-size: 0.85rem;
+
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: stretch;
 }
 
 .db-controls {
@@ -281,8 +311,15 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
   gap: 0.5rem;
   flex-grow: 1;
+}
+
+.container.expanded .db-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .meal-card {
@@ -295,6 +332,11 @@ body {
   border-radius: 6px;
   flex-shrink: 0;
   position: relative;
+}
+
+.container.expanded .meal-card {
+  width: 12.5rem;
+  min-height: 7rem;
 }
 
 .meal-card:hover {
@@ -475,7 +517,7 @@ body {
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--text-primary);
+  background-color: var(--text-tertiary);
   color: white;
   padding: 0.8rem 1.2rem;
   border-radius: 6px;

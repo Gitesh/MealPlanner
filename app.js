@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportCsvBtn = document.getElementById('export-csv-btn');
     const exportCancel = document.getElementById('export-cancel');
     const importFile = document.getElementById('import-file');
+    const toggleLayoutBtn = document.getElementById('toggle-layout-btn');
     const toast = document.getElementById('toast');
     const showDatesToggle = document.getElementById('show-dates-toggle');
     const shoppingListBtn = document.getElementById('shopping-list-btn');
@@ -649,6 +650,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.clientY <= 0) {
             exitIntentShown = true;
             exportModal.classList.remove('hidden');
+        }
+    });
+
+
+    //2025-11-30 GK - expandable layout for the menu database
+
+    let isExpanded = false;
+    toggleLayoutBtn.addEventListener('click', () => {
+        isExpanded = !isExpanded;
+        const container = document.querySelector('.container');
+        const buttonText = toggleLayoutBtn.querySelector('.button-text');
+
+        if (isExpanded) {
+            container.classList.add('expanded');
+            buttonText.textContent = 'Collapse';
+        } else {
+            container.classList.remove('expanded');
+            buttonText.textContent = 'Expand';
         }
     });
 

@@ -13,7 +13,7 @@
 
 <body>
   <header class="app-header">
-    <span class="material-symbols-outlined" style="font-size: 2.5rem; font-weight: 700;">restaurant</span>
+    <span class="material-symbols-outlined" style="font-size: 3.5rem; font-weight: 700;">restaurant</span>
     <div class="title">
       <h1>Simple Meal Planner</h1>
       <p>Plan your week, one delicious meal at a time.</p>
@@ -42,7 +42,7 @@
       </div>
       <div class="show-dates">
         <label>
-          <input type="checkbox" id="show-dates-toggle">
+          <input type="checkbox" id="show-dates-toggle" checked>
           Show dates
         </label>
         <div class="show-actions">
@@ -76,10 +76,19 @@
             <span class="material-symbols-outlined">download</span>
             <span class="button-text">Save</span>
           </button>
+
           <button id="add-meal-open" class="link-btn" title="Add a new meal to the database">
             <span class="material-symbols-outlined">add_circle</span>
             <span class="button-text">Add meal</span>
           </button>
+
+          <!--2025-11-30 Gitesh expand layout -->
+
+          <button id="toggle-layout-btn" class="link-btn" title="Toggle database layout">
+            <span class="material-symbols-outlined">view_column</span>
+            <span class="button-text">Expand</span>
+          </button>
+
         </div>
       </div>
     </div>
