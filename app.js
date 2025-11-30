@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const shoppingListModal = document.getElementById('shopping-list-modal');
     const shoppingListItems = document.getElementById('shopping-list-items');
     const shoppingListClose = document.getElementById('shopping-list-close');
+    const startDateInput = document.getElementById('start-date-input');
+    const setStartDateBtn = document.getElementById('set-start-date-btn');
+
 
 
     let meals = [];
@@ -143,7 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSuggestions(count) {
         suggestionsList.innerHTML = '';
         suggestionsTitle.textContent = `${count}-Day Meal Plan`;
-        let date = new Date();
+
+        // let date = new Date();
+        let date = customStartDate ? new Date(customStartDate) : new Date();
 
         const suggestions = new Set();
         while (suggestions.size < count) {
@@ -668,6 +673,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             container.classList.remove('expanded');
             buttonText.textContent = 'Expand';
+        }
+    });
+
+    let customStartDate = null;
+    setStartDateBtn.addEventListener('click', () => {
+        if (startDateInput.value) {
+            customStartDate = new Date(startDateInput.value);
+            const selectedDays = document.querySelector('input[name="days"]:checked').value;
+            renderSuggestions(selectedDays);
+            showToast('Start date updated!');
         }
     });
 
