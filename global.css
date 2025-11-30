@@ -77,6 +77,12 @@ body {
   max-width: 1100px;
 }
 
+.container.expanded {
+  grid-template-columns: 25rem 1fr;
+  max-width: none;
+}
+
+
 @media (min-width: 900px) {
   .container {
     grid-template-columns: 1fr 1fr;
@@ -298,8 +304,14 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
   gap: 0.5rem;
   flex-grow: 1;
+}
+
+.container.expanded .db-list {
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .meal-card {
@@ -312,6 +324,10 @@ body {
   border-radius: 6px;
   flex-shrink: 0;
   position: relative;
+}
+
+.container.expanded .meal-card {
+  width: 12rem;
 }
 
 .meal-card:hover {
