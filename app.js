@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 calBtn.dataset.mealName = meal.name;
             }
 
-            showToast('Meal updated in suggestions!');
+            showToast('Meal plan updated!');
         }
     });
 
