@@ -58,6 +58,7 @@ body {
 .title h1 {
   margin: 0;
   font-size: 1.6rem;
+  text-align: center;
   font-weight: 700;
   color: var(--card-bg);
 }
@@ -318,6 +319,7 @@ body {
 .container.expanded .db-list {
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .meal-card {
@@ -333,7 +335,8 @@ body {
 }
 
 .container.expanded .meal-card {
-  width: 12rem;
+  width: 12.5rem;
+  min-height: 7rem;
 }
 
 .meal-card:hover {
