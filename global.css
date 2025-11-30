@@ -418,6 +418,8 @@ body {
   font-size: 0;
   background-color: #ceb992;
   cursor: inherit;
+  z-index: -2000;
+  /* input is hidden and not selectable */
 }
 
 .show-actions {
