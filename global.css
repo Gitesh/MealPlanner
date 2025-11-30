@@ -16,7 +16,7 @@
   --background: #471323;
   --text-primary: #471323;
   --text-secondary: #5B2E48;
-  --text-tertiary: #73797e;
+  --text-tertiary: #73937e;
   --card-bg: #ceb992;
   --card-border: #5b2e48;
   --highlight-teal: #585563;
@@ -492,7 +492,7 @@ body {
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--text-primary);
+  background-color: var(--text-tertiary);
   color: white;
   padding: 0.8rem 1.2rem;
   border-radius: 6px;
