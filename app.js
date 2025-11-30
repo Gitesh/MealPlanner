@@ -677,7 +677,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let customStartDate = null;
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    startDateInput.setAttribute('min', today);
+
+    // Trigger date picker when button is clicked
     setStartDateBtn.addEventListener('click', () => {
+        startDateInput.showPicker();
+    });
+
+    // Auto-update when date is selected
+    startDateInput.addEventListener('change', () => {
         if (startDateInput.value) {
             customStartDate = new Date(startDateInput.value);
             const selectedDays = document.querySelector('input[name="days"]:checked').value;
