@@ -27,24 +27,42 @@
       <p class="muted">Drag from the list on the right to replace</p>
       <div id="suggestions-list" class="suggestions-list"></div>
       <div class="controls footer">
-        <div class="want-different">
-          <p>Want a different plan?</p>
-          <div class="days-and-randomise">
-            <div class="days-options">
-              <label><input type="radio" name="days" value="3"> 3 days</label>
-              <label><input type="radio" name="days" value="5" checked> 5 days</label>
-              <label><input type="radio" name="days" value="7"> 7 days</label>
-            </div>
-            <button id="randomise-btn" class="link-btn" title="Randomise Meals"><span class="button-text">Randomise
-                meals</span><span class="material-symbols-outlined">casino</span></button>
-          </div>
-        </div>
-      </div>
+
+        <div class="plan-and-set-date">
+          <div class="want-different">
+            <p>Want a different plan?</p>
+          </div> <!--want-different-->
+          <!--2025-11-30 Gitesh - start date        -->
+          <div class="set-date">
+            <input type="date" id="start-date-input" class="visible">
+            <button id="set-start-date-btn" class="link-btn" title="Set start date">
+              <span class="button-text">Set start date</span>
+              <span class="material-symbols-outlined">calendar_month</span>
+            </button>
+          </div> <!--set-date-->
+
+        </div> <!--plan-and-set-date-->
+
+        <div class="days-and-randomise">
+          <div class="days-options">
+            <label><input type="radio" name="days" value="3"> 3 days</label>
+            <label><input type="radio" name="days" value="5" checked> 5 days</label>
+            <label><input type="radio" name="days" value="7"> 7 days</label>
+          </div> <!--days-options -->
+          <button id="randomise-btn" class="link-btn" title="Randomise plan based on popularity"><span
+              class="button-text">Pick for me</span><span class="material-symbols-outlined">casino</span></button>
+        </div> <!--days-and-randomise -->
+
+
+      </div> <!--controls footer-->
       <div class="show-dates">
         <label>
           <input type="checkbox" id="show-dates-toggle" checked>
           Show dates
         </label>
+
+
+
         <div class="show-actions">
           <button id="shopping-list-btn" class="link-btn" title="Shopping List"><span class="button-text">Shopping
               list</span><span class="material-symbols-outlined">task</span></button>

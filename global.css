@@ -226,7 +226,7 @@ body {
   margin-top: auto;
   padding-top: 0.75rem;
   border-top: 1px solid var(--card-border);
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   gap: 0.5rem;
   align-items: stretch;
@@ -398,6 +398,30 @@ body {
   gap: 0.5rem;
 }
 
+
+.plan-and-set-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.set-date {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+
+#start-date-input {
+  border: none;
+  font-size: 0;
+  background-color: #ceb992;
+  cursor: inherit;
+  z-index: -2000;
+  /* input is hidden and not selectable */
+}
+
 .show-actions {
   display: flex;
   gap: 0.5rem;
@@ -518,7 +542,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--text-tertiary);
-  color: white;
+  color: var(--text-primary);
   padding: 0.8rem 1.2rem;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
