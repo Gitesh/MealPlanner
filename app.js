@@ -322,8 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // Final success sound and toast
                 setTimeout(() => {
-                    playTone(600, 'sine', 0.1);
-                    setTimeout(() => playTone(800, 'sine', 0.2), 100);
+                    // Start 'Ding' sound moved to showToast()
                     showToast('Random meals selected!');
                 }, 100);
             }
@@ -765,6 +764,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function showToast(message) {
+        // Play 'Ding' sound
+        playTone(600, 'sine', 0.1);
+        setTimeout(() => playTone(800, 'sine', 0.2), 100);
+
         toast.textContent = message;
         toast.classList.remove('hidden');
         setTimeout(() => toast.classList.add('hidden'), 3000);
