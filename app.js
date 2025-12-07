@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let meals = [];
     let allTags = new Set();
+    let selectedTags = new Set();
     let editingMealId = null;
     let mealsEdited = false;
 
@@ -101,9 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
             meal.tags.forEach(tag => allTags.add(tag));
         });
 
-        // Sort and repopulate tag filter
+        // Sort and repopulate tag filter buttons
         const sortedTags = [...allTags].sort();
         tagFilter.innerHTML = '<option value="all">all tags</option>';
+
         sortedTags.forEach(tag => {
             const option = document.createElement('option');
             option.value = tag;
@@ -112,13 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function renderDB(filter = '', tag = 'all') {
+    function renderDB(filter = '') {
         dbList.innerHTML = '';
         const filteredMeals = meals.filter(meal => {
             const matchesFilter = meal.name.toLowerCase().includes(filter.toLowerCase()) ||
                 meal.tags.some(t => t.toLowerCase().includes(filter.toLowerCase()));
-            const matchesTag = tag === 'all' || meal.tags.includes(tag);
-            return matchesFilter && matchesTag;
+
+            // Check if meal has ALL selected tags
+            const matchesTags = selectedTags.size === 0 ||
+                [...selectedTags].every(tag => meal.tags.includes(tag));
+
+            return matchesFilter && matchesTags;
         });
 
         dbTitle.textContent = `Choose from ${filteredMeals.length} meal${filteredMeals.length !== 1 ? 's' : ''}`;
@@ -128,11 +134,18 @@ document.addEventListener('DOMContentLoaded', () => {
             mealCard.className = 'meal-card';
             mealCard.draggable = true;
             mealCard.dataset.mealId = meal.id;
+
+            // Highlight active selected tags
+            const tagsHtml = meal.tags.map(t => {
+                const isActive = selectedTags.has(t) ? 'active' : '';
+                return `<span class="tag ${isActive}" data-tag="${t}">${t}</span>`;
+            }).join(' ');
+
             mealCard.innerHTML = `
                 <div>
                     <div class="meal-name">${meal.name}</div>
                     <div class="meal-meta">
-                        ${meal.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join(' ')}
+                        ${tagsHtml}
                     </div>
                 </div>
                 <div class="right">
@@ -275,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
             meals.push(newMeal);
         }
         updateAllTags();
-        renderDB(searchInput.value, tagFilter.value);
+        renderDB(searchInput.value);
         modal.classList.add('hidden');
         mealsEdited = true;
         showToast(editingMealId ? 'Meal updated!' : 'Meal added!');
@@ -337,13 +350,43 @@ document.addEventListener('DOMContentLoaded', () => {
         playSlotMachineEffect(selectedDays);
     });
 
-    searchInput.addEventListener('input', () => {
-        renderDB(searchInput.value, tagFilter.value);
+    // Track Ctrl key explicitly on change due to some browser inconsistencies
+    // But usually standard click adds modifier. 
+    // For Select element, 'change' event might not expose full MouseEvent if triggered via keyboard.
+    // We'll rely on a global tracker or assume MouseEvent if user clicks.
+
+    // Better: Allow standard change behavior.
+    tagFilter.addEventListener('click', (e) => {
+        // We capture click to know if Ctrl was held, but 'change' fires after closes.
+        // Actually, logic:
+        // If user Ctrl-Clicks an option in an expanded dropdown?
+        // Standard dropdown closes on click. 'change' fires.
+        // We can check the event passed to 'change' IF it was triggered by mouse?
+        // Or we use a global variable 'isCtrlPressed'.
     });
 
-    tagFilter.addEventListener('change', () => {
-        renderDB(searchInput.value, tagFilter.value);
+    let isCtrlPressed = false;
+    document.addEventListener('keydown', e => { if (e.key === 'Control') isCtrlPressed = true; });
+    document.addEventListener('keyup', e => { if (e.key === 'Control') isCtrlPressed = false; });
+
+    tagFilter.addEventListener('change', (e) => {
+        const val = tagFilter.value;
+        if (val === 'all') {
+            selectedTags.clear();
+        } else {
+            if (isCtrlPressed) {
+                // Add to selection
+                selectedTags.add(val);
+            } else {
+                // Replace selection
+                selectedTags.clear();
+                selectedTags.add(val);
+            }
+        }
+        renderDB(searchInput.value);
     });
+
+
 
     dbList.addEventListener('click', (e) => {
         if (e.target.closest('.edit-btn')) {
@@ -354,8 +397,20 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.classList.remove('hidden');
         } else if (e.target.classList.contains('tag')) {
             const tag = e.target.dataset.tag;
-            tagFilter.value = tag;
-            renderDB(searchInput.value, tag);
+            // Add to selected tags if not present, clears others? Or just toggles?
+            // UX decision: Clicking a tag on a card usually means "filter by this tag"
+            // Let's make it add to current filter for consistency with drilling down, or replace?
+            // "Filter by clicking on multiple tags" -> let's assume adding it is useful.
+            // But if I want to just see "Dinner", I might want to clear others.
+            // Let's stick to "Add to filter" logic for now, or just toggle it in the set.
+
+            if (selectedTags.has(tag)) {
+                selectedTags.delete(tag);
+            } else {
+                selectedTags.add(tag);
+            }
+            // updateAllTags(); // Don't rebuild dropdown on every click
+            renderDB(searchInput.value);
         }
     });
 

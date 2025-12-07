@@ -377,6 +377,13 @@ body {
   cursor: pointer;
 }
 
+.tag.active {
+  background-color: var(--card-border);
+  color: var(--card-bg);
+  font-weight: 600;
+}
+
+
 .meal-card .right {
   display: flex;
   flex-direction: column;
