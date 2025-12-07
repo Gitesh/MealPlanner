@@ -281,10 +281,61 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast(editingMealId ? 'Meal updated!' : 'Meal added!');
     }
 
+    // Audio Context for sound effects
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, type, duration) {
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playSlotMachineEffect(selectedDays) {
+        let count = 0;
+        const maxCount = 20; // How many shuffles
+        let speed = 50; // Start speed (ms)
+        const endSpeed = 300; // End speed (ms)
+
+        const shuffle = () => {
+            renderSuggestions(selectedDays);
+
+            // Sound effect: Pitch goes up as it slows down (or stays constant, let's do a 'tick')
+            // Using a high 'tick' sound
+            playTone(800 + (count * 20), 'square', 0.05);
+
+            count++;
+            if (count < maxCount) {
+                // Ease out: slow down
+                const progress = count / maxCount;
+                speed = 50 + (endSpeed - 50) * (progress * progress); // Quadratic ease-out
+                setTimeout(shuffle, speed);
+            } else {
+                // Final success sound and toast
+                setTimeout(() => {
+                    playTone(600, 'sine', 0.1);
+                    setTimeout(() => playTone(800, 'sine', 0.2), 100);
+                    showToast('Random meals selected!');
+                }, 100);
+            }
+        };
+
+        shuffle();
+    }
+
     // Event listeners
     randomiseBtn.addEventListener('click', () => {
         const selectedDays = document.querySelector('input[name="days"]:checked').value;
-        renderSuggestions(selectedDays);
+        playSlotMachineEffect(selectedDays);
     });
 
     searchInput.addEventListener('input', () => {

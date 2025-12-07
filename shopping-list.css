@@ -62,9 +62,14 @@
 }
 
 /* HOVER STATE: Logic to Swap */
-/* Hide Text */
+/* Keep Text Visible on Hover */
 .shopping-list-item:hover .view-mode {
-  display: none !important;
+  /* display: none !important;  <-- REMOVED */
+  display: block;
+  /* Ensure it creates space for controls if needed, 
+     but flex space-between handles positioning */
+  max-width: calc(100% - 100px);
+  /* prevent overlap with controls */
 }
 
 /* Show Controls */
