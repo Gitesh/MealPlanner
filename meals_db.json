@@ -177,7 +177,7 @@
       "green chilli",
       "yoghurt",
       "rice",
-      "cardomom pods",
+      "cardamom pods",
       "chicken stock mix",
       "crispy onions"
     ]
@@ -218,7 +218,7 @@
       "baby leaf salad",
       "carrots",
       "sesame seeds",
-      "chicken brest",
+      "chicken breast",
       "spring onion",
       "mango chutney",
       "rice",
@@ -239,7 +239,7 @@
       "egg",
       "soy sauce",
       "sushi rice",
-      "chicken brest",
+      "chicken breast",
       "panko breadcrumbs",
       "curry powder",
       "gem lettuce",
@@ -247,19 +247,19 @@
       "red wine vinegar",
       "solid creamed coconut",
       "ginger",
-      "tumeric"
+      "turmeric"
     ]
   },
   {
     "id": "m15",
-    "name": "Tortollini pasta",
+    "name": "Tortellini pasta",
     "tags": [
       "Italian",
       "15 min"
     ],
     "popularity": 0.76,
     "ingredients": [
-      "Tortollini",
+      "Tortellini",
       "pasta sauce",
       "fresh herbs"
     ]
@@ -284,7 +284,7 @@
   },
   {
     "id": "m17",
-    "name": "Haddock with Sticky Rice and Cruchy Salad",
+    "name": "Haddock with Sticky Rice and Crunchy Salad",
     "tags": [
       "Vietnamese",
       "40 min"

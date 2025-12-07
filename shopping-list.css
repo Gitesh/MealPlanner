@@ -11,29 +11,100 @@
 .shopping-list-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   padding: 0.5rem;
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.2s;
+  min-height: 40px;
 }
 
 .shopping-list-item:hover {
   background-color: #f0f0f0;
 }
 
+/* Checkbox */
 .shopping-list-item input[type="checkbox"] {
   cursor: pointer;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex-shrink: 0;
 }
 
-.shopping-list-item input[type="checkbox"]:checked + span {
-  text-decoration: line-through;
-  color: #999;
-}
-
-.shopping-list-item span {
+/* Container */
+.item-content {
   flex: 1;
+  display: flex;
+  align-items: center;
+  /* Ensure strict row layout */
+  flex-direction: row !important;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* Text (View Mode) */
+.view-mode {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Controls (Edit Mode) - FORCE HIDDEN DEFAULT */
+.edit-mode.quantity-controls {
+  display: none !important;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* HOVER STATE: Logic to Swap */
+/* Hide Text */
+.shopping-list-item:hover .view-mode {
+  display: none !important;
+}
+
+/* Show Controls */
+.shopping-list-item:hover .edit-mode.quantity-controls {
+  display: flex !important;
+}
+
+/* Strikethrough Logic */
+.shopping-list-item input[type="checkbox"]:checked~.item-content .view-mode {
+  text-decoration: line-through;
+  color: #888;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* Buttons */
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: #555;
+  padding: 0;
+}
+
+.qty-btn:hover {
+  background-color: #eee;
+  border-color: #999;
+}
+
+.qty-val {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
 }

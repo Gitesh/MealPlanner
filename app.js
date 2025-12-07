@@ -490,13 +490,88 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const sortedIngredients = Array.from(ingredientCounts.entries()).sort((a, b) => a[0].localeCompare(b[0]));
             shoppingListItems.innerHTML = sortedIngredients.map(([ingredient, count]) => {
-                const countDisplay = count > 1 ? ` [${count}]` : '';
+                const displayText = count > 1 ? `${ingredient} [${count}]` : ingredient;
                 return `
                 <label class="shopping-list-item">
-                    <input type="checkbox" class="ingredient-checkbox" data-ingredient="${ingredient}">
-                    <span>${ingredient}${countDisplay}</span>
+                    <input type="checkbox" class="ingredient-checkbox">
+                    <div class="item-content" data-current="${count}" data-original="${count}" data-ingredient="${ingredient}">
+                        <span class="view-mode">${displayText}</span>
+                        <div class="edit-mode quantity-controls">
+                            <button class="qty-btn minus" type="button" aria-label="Decrease quantity">-</button>
+                            <span class="qty-val">${count}</span>
+                            <button class="qty-btn plus" type="button" aria-label="Increase quantity">+</button>
+                        </div>
+                    </div>
                 </label>
             `}).join('');
+
+            // Helper to update UI state
+            const updateItemState = (row, newCount) => {
+                const checkbox = row.closest('.shopping-list-item').querySelector('input');
+                const contentDiv = row; // .item-content
+                const name = contentDiv.dataset.ingredient;
+                const valSpan = contentDiv.querySelector('.qty-val');
+                const viewSpan = contentDiv.querySelector('.view-mode');
+
+                contentDiv.dataset.current = newCount;
+                valSpan.textContent = newCount;
+
+                // Checkbox logic: 0 = Checked, >0 = Unchecked
+                if (newCount === 0) {
+                    checkbox.checked = true;
+                    viewSpan.textContent = name; // Count 0 -> Show just name (crossed out)
+                } else {
+                    checkbox.checked = false;
+                    viewSpan.textContent = newCount > 1 ? `${name} [${newCount}]` : name;
+                }
+            };
+
+            // Event Listeners
+            shoppingListItems.querySelectorAll('.shopping-list-item').forEach(item => {
+                const checkbox = item.querySelector('input');
+                const contentDiv = item.querySelector('.item-content');
+
+                // Checkbox Change
+                checkbox.addEventListener('change', (e) => {
+                    if (checkbox.checked) {
+                        // Checked -> Count 0
+                        // Store current value as original if it wasn't 0 (to restore later)
+                        let current = parseInt(contentDiv.dataset.current);
+                        if (current > 0) contentDiv.dataset.original = current;
+                        updateItemState(contentDiv, 0);
+                    } else {
+                        // Unchecked -> Restore original or default to 1
+                        let restore = parseInt(contentDiv.dataset.original);
+                        if (restore === 0) restore = 1; // Fallback
+                        updateItemState(contentDiv, restore);
+                    }
+                });
+
+                // Quantity Buttons
+                item.querySelectorAll('.qty-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        let currentVal = parseInt(contentDiv.dataset.current);
+
+                        if (btn.classList.contains('plus')) {
+                            // Increment: If was 0, restores unchecked state
+                            if (currentVal === 0) {
+                                // Restore logic handled by updateItemState logic
+                            }
+                            currentVal++;
+                        } else {
+                            currentVal = Math.max(0, currentVal - 1);
+                        }
+
+                        // Update original if > 0 so that checking/unchecking remembers this new value
+                        if (currentVal > 0) contentDiv.dataset.original = currentVal;
+
+                        updateItemState(contentDiv, currentVal);
+                    });
+                });
+            });
         }
 
         shoppingListModal.classList.remove('hidden');
@@ -510,9 +585,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = [];
         shoppingListItems.querySelectorAll('.shopping-list-item').forEach(label => {
             const checkbox = label.querySelector('input');
-            const span = label.querySelector('span');
+            const contentDiv = label.querySelector('.item-content');
+
+            const name = contentDiv.dataset.ingredient || '';
+            const qty = parseInt(contentDiv.dataset.current) || 0;
+
+            // Format text with quantity if > 1
+            const text = qty > 1 ? `${name} [${qty}]` : name;
+
             items.push({
-                text: span.textContent,
+                text: text,
                 checked: checkbox.checked
             });
         });
@@ -684,7 +766,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Trigger date picker when button is clicked
     setStartDateBtn.addEventListener('click', () => {
-        startDateInput.showPicker();
+        try {
+            if (typeof startDateInput.showPicker === 'function') {
+                startDateInput.showPicker();
+            } else {
+                startDateInput.click(); // Fallback for older browsers
+                startDateInput.focus();
+            }
+        } catch (error) {
+            console.log('Date picker not supported programmatically');
+            startDateInput.click();
+        }
     });
 
     // Auto-update when date is selected
