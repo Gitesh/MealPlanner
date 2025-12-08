@@ -549,7 +549,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--text-tertiary);
-  color: var(--text-primary);
+  color: white;
   padding: 0.8rem 1.2rem;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
