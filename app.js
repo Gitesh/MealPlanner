@@ -109,9 +109,23 @@ document.addEventListener('DOMContentLoaded', () => {
         sortedTags.forEach(tag => {
             const option = document.createElement('option');
             option.value = tag;
-            option.textContent = tag;
+            const isSelected = selectedTags.has(tag);
+            option.textContent = (isSelected ? '✔ ' : '') + tag;
+            if (isSelected) {
+                option.style.fontWeight = 'bold';
+                option.style.backgroundColor = '#ffeaa7';
+            }
             tagFilter.appendChild(option);
         });
+
+        if (selectedTags.size === 1) {
+            tagFilter.value = [...selectedTags][0];
+        } else if (selectedTags.size === 0) {
+            tagFilter.value = 'all';
+        } else {
+            const first = [...selectedTags][0];
+            tagFilter.value = first;
+        }
     }
 
     function renderDB(filter = '') {
@@ -356,6 +370,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // We'll rely on a global tracker or assume MouseEvent if user clicks.
 
     // Better: Allow standard change behavior.
+    // Search input listener (Restored)
+    searchInput.addEventListener('input', () => {
+        renderDB(searchInput.value);
+    });
+
     tagFilter.addEventListener('click', (e) => {
         // We capture click to know if Ctrl was held, but 'change' fires after closes.
         // Actually, logic:
@@ -384,6 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         renderDB(searchInput.value);
+        updateAllTags(); // Update visual checkmarks
     });
 
 
@@ -409,8 +429,18 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 selectedTags.add(tag);
             }
-            // updateAllTags(); // Don't rebuild dropdown on every click
+
+            // Sync dropdown with selection
+            if (selectedTags.size === 0) {
+                tagFilter.value = 'all';
+            } else if (selectedTags.size === 1) {
+                tagFilter.value = [...selectedTags][0];
+            }
+            // If multiple, we leave it as is (likely showing the last selected or primary) 
+            // or we could force it to something, but 'all' is wrong and standard select can't show multiple.
+
             renderDB(searchInput.value);
+            updateAllTags(); // Update visual checkmarks
         }
     });
 
