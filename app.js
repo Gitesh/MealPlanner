@@ -928,4 +928,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Admin / Settings Logic
+    const adminModal = document.getElementById('admin-modal');
+    const adminClose = document.getElementById('admin-close');
+    const glassModeToggle = document.getElementById('glass-mode-toggle');
+
+    document.addEventListener('keydown', (e) => {
+        // Toggle Admin Modal on '?' (Shift + /)
+        if (e.key === '?') {
+            // Prevent if user is typing in an input
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+            e.preventDefault();
+            adminModal.classList.toggle('hidden');
+        }
+    });
+
+    adminClose.addEventListener('click', () => {
+        adminModal.classList.add('hidden');
+    });
+
+    glassModeToggle.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            document.body.classList.add('glass-mode');
+        } else {
+            document.body.classList.remove('glass-mode');
+        }
+    });
+
 });
