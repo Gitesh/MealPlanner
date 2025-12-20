@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (meal) {
             if (meal.url) {
-                details += `\n\nRecipe: ${meal.url}`;
+                details += `\n\nRecipe: <a href="${meal.url}">${meal.url}</a>`;
             }
             if (meal.ingredients && meal.ingredients.length > 0) {
                 const ingredientsList = meal.ingredients.map(ing => `• ${ing}`).join('\n');
@@ -254,9 +254,15 @@ document.addEventListener('DOMContentLoaded', () => {
             text: mealName,
             dates: `${start}/${end}`,
             details: details,
+            location: meal.url || '',
             sf: 'true',
             output: 'xml'
         });
+
+        if (meal && meal.url) {
+            params.append('sprop', `website:${meal.url}`);
+            params.append('sprop', 'name:Recipe');
+        }
 
         const calendarUrl = `https://www.google.com/calendar/render?${params.toString()}`;
         window.open(calendarUrl, '_blank');
