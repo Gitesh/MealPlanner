@@ -162,8 +162,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${tagsHtml}
                     </div>
                 </div>
-                <div class="right">
-                    <button class="btn edit-btn" data-id="${meal.id}"><span class="material-symbols-outlined">edit</span></button>
+                <div class="right" style="flex-direction: row; align-items: center;">
+                    <button class="btn link-btn-icon edit-btn" data-id="${meal.id}" title="Edit Meal"><span class="material-symbols-outlined">edit</span></button>
+                    ${meal.url
+                    ? `<button class="btn link-btn-icon" onclick="window.open('${meal.url}', '_blank')" title="View Recipe"><span class="material-symbols-outlined">open_in_new</span></button>`
+                    : `<button class="btn link-btn-icon" style="visibility: hidden; pointer-events: none;" aria-hidden="true"><span class="material-symbols-outlined">open_in_new</span></button>`
+                }
                 </div>
             `;
             dbList.appendChild(mealCard);
@@ -199,7 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="meal-name">${meal.name}</span>
                 </div>
                 <div class="suggestion-action">
-                    <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${buttonDate.toISOString()}">
+                    ${meal.url ? `<button class="btn link-btn-icon" onclick="window.open('${meal.url}', '_blank')" title="View Recipe"><span class="material-symbols-outlined">open_in_new</span></button>` : ''}
+                    <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${buttonDate.toISOString()}" title="Add to Calendar">
                     <span class="material-symbols-outlined">event</span>
                     </button>
                 </div>
@@ -233,9 +238,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Find the meal and get its ingredients
         const meal = meals.find(m => m.name === mealName);
         let details = `Meal planned: ${mealName}`;
-        if (meal && meal.ingredients && meal.ingredients.length > 0) {
-            const ingredientsList = meal.ingredients.map(ing => `• ${ing}`).join('\n');
-            details = `Meal planned: ${mealName}\n\nIngredients:\n${ingredientsList}`;
+
+        if (meal) {
+            if (meal.url) {
+                details += `\n\nRecipe: ${meal.url}`;
+            }
+            if (meal.ingredients && meal.ingredients.length > 0) {
+                const ingredientsList = meal.ingredients.map(ing => `• ${ing}`).join('\n');
+                details += `\n\nIngredients:\n${ingredientsList}`;
+            }
         }
 
         const params = new URLSearchParams({
@@ -271,6 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mealPopInput.value = meal.popularity;
         popValue.textContent = meal.popularity;
         document.getElementById('ingredients').value = (meal.ingredients || []).join(', ');
+        document.getElementById('meal-url').value = meal.url || '';
     }
     // Function to handle adding a new meal
     function addMeal() {
@@ -282,6 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tags = sortTags(tags);
         const popularity = parseFloat(mealPopInput.value);
         const ingredients = document.getElementById('ingredients').value.split(',').map(i => toSentenceCase(i.trim())).filter(Boolean);
+        const url = document.getElementById('meal-url').value.trim();
 
         if (editingMealId) {
             // Update existing meal
@@ -290,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
             meal.tags = tags;
             meal.popularity = popularity;
             meal.ingredients = ingredients;
+            meal.url = url;
         } else {
             // Add new meal
             const newMeal = {
@@ -297,7 +311,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 name,
                 tags,
                 popularity,
-                ingredients
+                ingredients,
+                url
             };
             meals.push(newMeal);
         }
@@ -558,12 +573,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function exportAsCSV() {
-        const headers = ['name', 'tags', 'popularity', 'ingredients'];
+        const headers = ['name', 'tags', 'popularity', 'ingredients', 'url'];
         const rows = meals.map(m => [
             `"${m.name.replace(/"/g, '""')}"`,
             `"${(m.tags || []).join(';').replace(/"/g, '""')}"`,
             m.popularity,
-            `"${(m.ingredients || []).join(';').replace(/"/g, '""')}"`
+            `"${(m.ingredients || []).join(';').replace(/"/g, '""')}"`,
+            `"${(m.url || '').replace(/"/g, '""')}"`
         ]);
         const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
         downloadFile(getTimestampFilename('csv'), csv, 'text/csv');
@@ -790,6 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tagsIdx = headers.indexOf('tags');
         const popIdx = headers.indexOf('popularity');
         const ingredientsIdx = headers.indexOf('ingredients');
+        const urlIdx = headers.indexOf('url');
 
         const result = [];
         for (let i = 1; i < lines.length; i++) {
@@ -800,7 +817,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: row[nameIdx] || row[0] || `Row ${i}`,
                 tags: (row[tagsIdx] || '').split(';').map(t => t.trim()).filter(Boolean),
                 popularity: parseFloat(row[popIdx]) || 0.5,
-                ingredients: (row[ingredientsIdx] || '').split(';').map(ing => ing.trim()).filter(Boolean)
+                ingredients: (row[ingredientsIdx] || '').split(';').map(ing => ing.trim()).filter(Boolean),
+                url: urlIdx !== -1 ? (row[urlIdx] || '') : ''
             });
         }
         return result;

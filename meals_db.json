@@ -3,307 +3,310 @@
     "id": "m0",
     "name": "Tuna Pasta Bake",
     "tags": [
-      "pasta",
+      "baked",
       "fish",
-      "baked"
+      "pasta"
     ],
     "popularity": 0.8,
     "ingredients": [
-      "tuna",
-      "pasta",
-      "cheese"
+      "Tuna",
+      "Pasta",
+      "Cheese"
     ]
   },
   {
     "id": "m1",
     "name": "Satay Chicken Skewers",
     "tags": [
-      "quick",
-      "asian"
+      "Asian",
+      "quick"
     ],
     "popularity": 0.9,
     "ingredients": [
-      "chicken",
-      "satay sauce",
-      "skewers"
+      "Chicken",
+      "Satay sauce",
+      "Skewers"
     ]
   },
   {
     "id": "m2",
     "name": "Butternut Squash Risotto",
     "tags": [
-      "vegetarian",
-      "italian"
+      "Italian",
+      "vegetarian"
     ],
     "popularity": 0.7,
     "ingredients": [
-      "butternut squash",
-      "rice",
-      "parmesan"
+      "Butternut squash",
+      "Rice",
+      "Parmesan"
     ]
   },
   {
     "id": "m3",
     "name": "Leek & Potato Soup",
     "tags": [
-      "vegetarian",
+      "quick",
       "soup",
-      "quick"
+      "vegetarian"
     ],
     "popularity": 0.6,
     "ingredients": [
-      "leeks",
-      "potatoes",
-      "vegetable stock"
+      "Leeks",
+      "Potatoes",
+      "Vegetable stock"
     ]
   },
   {
     "id": "m4",
     "name": "Classic Fish Pie",
     "tags": [
-      "fish",
-      "comfort"
+      "comfort",
+      "fish"
     ],
     "popularity": 0.75,
     "ingredients": [
-      "fish",
-      "potatoes",
-      "milk"
-    ]
+      "Fish",
+      "Potatoes",
+      "Milk"
+    ],
+    "url": "https://www.bbcgoodfood.com/recipes/no-fuss-fish-pie"
   },
   {
     "id": "m5",
     "name": "Spaghetti Bolognese",
     "tags": [
-      "pasta",
-      "italian",
-      "lamb"
+      "Italian",
+      "lamb",
+      "pasta"
     ],
     "popularity": 0.95,
     "ingredients": [
-      "spaghetti",
-      "lamb",
-      "tomato sauce"
+      "Spaghetti",
+      "Lamb",
+      "Tomato sauce"
     ]
   },
   {
     "id": "m6",
     "name": "Chicken Fajitas",
     "tags": [
-      "mexican",
+      "Mexican",
       "quick"
     ],
     "popularity": 0.85,
     "ingredients": [
-      "chicken",
-      "peppers",
-      "tortillas"
+      "Chicken",
+      "Peppers",
+      "Tortillas"
     ]
   },
   {
     "id": "m7",
     "name": "Lentil Shepherd's Pie",
     "tags": [
-      "vegetarian",
+      "comfort",
       "vegan",
-      "comfort"
+      "vegetarian"
     ],
     "popularity": 0.65,
     "ingredients": [
-      "lentils",
-      "potatoes",
-      "carrots"
+      "Lentils",
+      "Potatoes",
+      "Carrots"
     ]
   },
   {
     "id": "m8",
     "name": "Salmon with Roasted Veg",
     "tags": [
+      "baked",
       "fish",
-      "healthy",
-      "baked"
+      "healthy"
     ],
     "popularity": 0.8,
     "ingredients": [
-      "salmon",
-      "vegetables",
-      "olive oil"
+      "Salmon",
+      "Vegetables",
+      "Olive oil"
     ]
   },
   {
     "id": "m9",
     "name": "Chicken Curry",
     "tags": [
-      "indian",
-      "mild",
-      "chicken"
+      "chicken",
+      "Indian",
+      "mild"
     ],
     "popularity": 0.2,
     "ingredients": [
-      "chicken",
-      "spices",
-      "yogurt"
+      "Chicken",
+      "Spices",
+      "Yogurt"
     ]
   },
   {
     "id": "m10",
     "name": "Thai Green Curry",
     "tags": [
-      "asian",
-      "spicy",
-      "chicken"
+      "Asian",
+      "chicken",
+      "spicy"
     ],
     "popularity": 0.9,
     "ingredients": [
-      "chicken",
-      "curry paste",
-      "coconut milk"
+      "Chicken",
+      "Curry paste",
+      "Coconut milk"
     ]
   },
   {
     "id": "m11",
     "name": "Chicken Breast Biryani with Yoghurt",
     "tags": [
-      "Chicken",
       "30 min",
-      "oven",
-      "indian"
+      "chicken",
+      "Indian",
+      "oven"
     ],
     "popularity": 0.28,
     "ingredients": [
       "Chicken",
-      "tomatoes",
-      "butternut squash",
-      "green chilli",
-      "yoghurt",
-      "rice",
-      "cardamom pods",
-      "chicken stock mix",
-      "crispy onions"
+      "Tomatoes",
+      "Butternut squash",
+      "Green chilli",
+      "Yoghurt",
+      "Rice",
+      "Cardamom pods",
+      "Chicken stock mix",
+      "Crispy onions"
     ]
   },
   {
     "id": "m12",
     "name": "Lamb Biryani",
     "tags": [
-      "Lamb",
       "20 min",
-      "rice",
-      "indian"
+      "Indian",
+      "lamb",
+      "rice"
     ],
     "popularity": 0.5,
     "ingredients": [
-      "onions",
-      "lamb",
-      "yoghurt",
-      "green beans",
-      "sultanas",
-      "rice",
-      "chicken stock"
+      "Onions",
+      "Lamb",
+      "Yoghurt",
+      "Green beans",
+      "Sultanas",
+      "Rice",
+      "Chicken stock"
     ]
   },
   {
     "id": "m13",
     "name": "Sesame Katsu with Rice",
     "tags": [
-      "Japanese",
-      "Chicken",
-      "40 min"
+      "40 min",
+      "chicken",
+      "Japanese"
     ],
     "popularity": 0.5,
     "ingredients": [
       "Shallot",
-      "lime",
-      "soy sauce",
-      "baby leaf salad",
-      "carrots",
-      "sesame seeds",
-      "chicken breast",
-      "spring onion",
-      "mango chutney",
-      "rice",
-      "blanched edamame beans"
+      "Lime",
+      "Soy sauce",
+      "Baby leaf salad",
+      "Carrots",
+      "Sesame seeds",
+      "Chicken breast",
+      "Spring onion",
+      "Mango chutney",
+      "Rice",
+      "Blanched edamame beans"
     ]
   },
   {
     "id": "m14",
     "name": "Chicken Katsu Curry with Pickled Ginger Salad",
     "tags": [
-      "Chicken",
-      "Japanese",
-      "40 min"
+      "40 min",
+      "chicken",
+      "Japanese"
     ],
     "popularity": 0.81,
     "ingredients": [
-      "brown onions",
-      "egg",
-      "soy sauce",
-      "sushi rice",
-      "chicken breast",
-      "panko breadcrumbs",
-      "curry powder",
-      "gem lettuce",
-      "garlic clove",
-      "red wine vinegar",
-      "solid creamed coconut",
-      "ginger",
-      "turmeric"
+      "Brown onions",
+      "Egg",
+      "Soy sauce",
+      "Sushi rice",
+      "Chicken breast",
+      "Panko breadcrumbs",
+      "Curry powder",
+      "Gem lettuce",
+      "Garlic clove",
+      "Red wine vinegar",
+      "Solid creamed coconut",
+      "Ginger",
+      "Turmeric"
     ]
   },
   {
     "id": "m15",
-    "name": "Tortellini pasta",
+    "name": "Tortellini Pasta",
     "tags": [
-      "Italian",
-      "15 min"
+      "15 min",
+      "Italian"
     ],
     "popularity": 0.76,
     "ingredients": [
       "Tortellini",
-      "pasta sauce",
-      "fresh herbs"
+      "Pasta sauce",
+      "Fresh herbs"
     ]
   },
   {
     "id": "m16",
     "name": "Tuna Pasta",
     "tags": [
-      "Fish",
+      "15 min",
+      "fish",
       "Italian",
-      "Pasta",
-      "15 min"
+      "pasta"
     ],
     "popularity": 0.5,
     "ingredients": [
       "Tuna",
-      "pasta",
-      "pasta sauce",
-      "peas",
-      "sweetcorn"
+      "Pasta",
+      "Pasta sauce",
+      "Peas",
+      "Sweetcorn"
     ]
   },
   {
     "id": "m17",
     "name": "Haddock with Sticky Rice and Crunchy Salad",
     "tags": [
+      "40 min",
       "Vietnamese",
-      "40 min"
+      "fish"
     ],
     "popularity": 0.5,
     "ingredients": [
       "Lime",
-      "garlic",
-      "mint",
-      "soy sauce",
-      "sushi rice",
-      "haddock bites",
-      "gem lettuce",
-      "cucumber",
-      "carrot",
-      "sesame seeds",
-      "dried chilli",
-      "ginger"
-    ]
+      "Garlic",
+      "Mint",
+      "Soy sauce",
+      "Sushi rice",
+      "Haddock bites",
+      "Gem lettuce",
+      "Cucumber",
+      "Carrot",
+      "Sesame seeds",
+      "Dried chilli",
+      "Ginger"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/recipes/vietnamese-style-haddock-with-sticky-rice-salad"
   },
   {
     "id": "m18",
@@ -316,16 +319,16 @@
     "id": "m19",
     "name": "Fish Shak",
     "tags": [
-      "Fish",
-      "indian",
-      "30 min"
+      "30 min",
+      "fish",
+      "Indian"
     ],
     "popularity": 0.5,
     "ingredients": [
       "White fish",
-      "onions",
-      "potatoes",
-      "chapati"
+      "Onions",
+      "Potatoes",
+      "Chapati"
     ]
   }
 ]
