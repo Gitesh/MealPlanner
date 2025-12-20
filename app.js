@@ -465,6 +465,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    dbList.addEventListener('dblclick', (e) => {
+        const card = e.target.closest('.meal-card');
+        if (card) {
+            editingMealId = card.dataset.mealId;
+            const meal = meals.find(m => m.id === editingMealId);
+            if (meal) {
+                modalTitle.textContent = 'Edit Meal';
+                populateModal(meal);
+                modal.classList.remove('hidden');
+            }
+        }
+    });
+
     addMealOpen.addEventListener('click', () => {
         editingMealId = null;
         modalTitle.textContent = 'Add Meal';
