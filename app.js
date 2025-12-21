@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="right" style="flex-direction: row; align-items: center;">
                     <button class="btn link-btn-icon edit-btn" data-id="${meal.id}" title="Edit Meal"><span class="material-symbols-outlined">edit</span></button>
                     ${meal.url
-                    ? `<button class="btn link-btn-icon" onclick="window.open('${meal.url}', '_blank')" title="View Recipe"><span class="material-symbols-outlined">open_in_new</span></button>`
-                    : `<button class="btn link-btn-icon" style="visibility: hidden; pointer-events: none;" aria-hidden="true"><span class="material-symbols-outlined">open_in_new</span></button>`
+                    ? `<button class="btn link-btn-icon" onclick="window.open('${meal.url}', '_blank')" title="View Recipe"><span class="material-symbols-outlined">menu_book</span></button>`
+                    : `<button class="btn link-btn-icon" style="visibility: hidden; pointer-events: none;" aria-hidden="true"><span class="material-symbols-outlined">menu_book</span></button>`
                 }
                 </div>
             `;
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function renderSuggestions(count) {
+    function renderSuggestions(count, showRecipeIcons = true) {
         suggestionsList.innerHTML = '';
         suggestionsTitle.textContent = `${count}-Day Meal Plan`;
 
@@ -203,10 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="meal-name">${meal.name}</span>
                 </div>
                 <div class="suggestion-action">
-                    ${meal.url ? `<button class="btn link-btn-icon" onclick="window.open('${meal.url}', '_blank')" title="View Recipe"><span class="material-symbols-outlined">open_in_new</span></button>` : ''}
+                ${showRecipeIcons && meal.url ? `<button class="btn link-btn-icon" onclick="window.open('${meal.url}', '_blank')" title="View Recipe"><span class="material-symbols-outlined">menu_book</span></button>` : ''}
                     <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${buttonDate.toISOString()}" title="Add to Calendar">
                     <span class="material-symbols-outlined">event</span>
                     </button>
+                    
                 </div>
             `;
             suggestionsList.appendChild(suggestionEl);
@@ -355,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const endSpeed = 300; // End speed (ms)
 
         const shuffle = () => {
-            renderSuggestions(selectedDays);
+            renderSuggestions(selectedDays, false); // Hide icons during shuffle
 
             // Sound effect: Pitch goes up as it slows down (or stays constant, let's do a 'tick')
             // Using a high 'tick' sound
@@ -368,6 +369,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 speed = 50 + (endSpeed - 50) * (progress * progress); // Quadratic ease-out
                 setTimeout(shuffle, speed);
             } else {
+                // Final render to show icons
+                renderSuggestions(selectedDays, true);
+
                 // Final success sound and toast
                 setTimeout(() => {
                     // Start 'Ding' sound moved to showToast()
