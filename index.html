@@ -159,19 +159,52 @@
       </div>
     </div>
 
-    <!-- Admin / Settings Modal -->
-    <div id="admin-modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-content">
-        <h3>Settings</h3>
-        <div class="admin-section">
-          <h4>Style</h4>
-          <label class="toggle-control">
-            <input type="checkbox" id="glass-mode-toggle">
-            Glassmorphism Mode
-          </label>
+    <!-- User Guide Modal -->
+    <div id="guide-modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content" style="max-width: 600px;">
+        <h3>User Guide</h3>
+        <div class="guide-scroll-area" style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem;">
+
+          <div class="admin-section">
+            <h4>⚡ Quick Actions</h4>
+            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem; color: #555;">
+              <li style="margin-bottom: 0.3rem;"><strong>Double-Click Meal:</strong> Open edit modal</li>
+              <li style="margin-bottom: 0.3rem;"><strong>Drag & Drop:</strong> Drag meal to plan to replace suggestion
+              </li>
+              <li style="margin-bottom: 0.3rem;"><strong>Ctrl + /:</strong> View this guide</li>
+            </ul>
+          </div>
+
+          <div class="admin-section" style="margin-top: 1rem;">
+            <h4>📅 Planning</h4>
+            <p style="margin: 0 0 0.5rem; font-size: 0.9rem;">
+              Click <strong>"Pick for me"</strong> to randomize suggestions.
+              Click the <span class="material-symbols-outlined"
+                style="vertical-align: middle; font-size: 1rem;">event</span> icon to add a meal to your calendar.
+            </p>
+          </div>
+
+          <div class="admin-section" style="margin-top: 1rem;">
+            <h4>🛒 Shopping List</h4>
+            <p style="margin: 0 0 0.5rem; font-size: 0.9rem;">
+              Generated automatically from your current plan. Open it to check off items, adjust quantities, or copy to
+              clipboard.
+              Amounts sync: checking an item sets it to 0, unchecking restores it.
+            </p>
+          </div>
+
+          <div class="admin-section" style="margin-top: 1rem;">
+            <h4>💾 Data</h4>
+            <p style="margin: 0 0 0.5rem; font-size: 0.9rem;">
+              Your data is local. Use <strong>Save</strong> to download a backup (JSON/CSV) and <strong>Upload</strong>
+              to restore it later.
+            </p>
+          </div>
+
         </div>
+
         <div class="modal-actions">
-          <button id="admin-close" class="btn">Close</button>
+          <button id="guide-close" class="btn highlight-yellow">Got it!</button>
         </div>
       </div>
     </div>

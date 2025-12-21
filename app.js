@@ -965,32 +965,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Admin / Settings Logic
-    const adminModal = document.getElementById('admin-modal');
-    const adminClose = document.getElementById('admin-close');
-    const glassModeToggle = document.getElementById('glass-mode-toggle');
+    // User Guide Logic
+    const guideModal = document.getElementById('guide-modal');
+    const guideClose = document.getElementById('guide-close');
 
     document.addEventListener('keydown', (e) => {
-        // Toggle Admin Modal on '?' (Shift + /)
-        if (e.key === '?') {
+        // Toggle Guide Modal on '?' (Shift + /) or Ctrl + /
+        if ((e.key === '?' && !e.ctrlKey) || (e.key === '/' && e.ctrlKey)) {
             // Prevent if user is typing in an input
             if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
 
             e.preventDefault();
-            adminModal.classList.toggle('hidden');
+            guideModal.classList.toggle('hidden');
         }
     });
 
-    adminClose.addEventListener('click', () => {
-        adminModal.classList.add('hidden');
-    });
-
-    glassModeToggle.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            document.body.classList.add('glass-mode');
-        } else {
-            document.body.classList.remove('glass-mode');
-        }
+    guideClose.addEventListener('click', () => {
+        guideModal.classList.add('hidden');
     });
 
 });
