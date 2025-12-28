@@ -288,8 +288,8 @@
     "name": "Haddock with Sticky Rice and Crunchy Salad",
     "tags": [
       "40 min",
-      "Vietnamese",
-      "fish"
+      "fish",
+      "Vietnamese"
     ],
     "popularity": 0.5,
     "ingredients": [
@@ -330,5 +330,26 @@
       "Potatoes",
       "Chapati"
     ]
+  },
+  {
+    "id": "m1766939627163",
+    "name": "Bacon Penne All’arrabbiata",
+    "tags": [
+      "20 mins",
+      "bacon",
+      "Italian"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Pasta",
+      "Shallot",
+      "Bacon",
+      "Chilli",
+      "Smoked paprika",
+      "Garlic",
+      "Chives",
+      "Chopped tomatoe"
+    ],
+    "url": "https://www.hellofresh.co.uk/recipes/bacon-penne-allarrabbiata-600192d596070835a23d3102"
   }
 ]
