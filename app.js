@@ -515,6 +515,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.classList.contains('meal-card')) {
             draggedItem = e.target;
             setTimeout(() => e.target.style.opacity = '0.5', 0);
+
+            // Highlight drop area
+            const suggestionsCard = document.getElementById('suggestions-card');
+            if (suggestionsCard) suggestionsCard.classList.add('drag-active');
         }
     });
 
@@ -522,6 +526,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (draggedItem) {
             setTimeout(() => e.target.style.opacity = '1', 0);
             draggedItem = null;
+
+            // Remove highlight
+            const suggestionsCard = document.getElementById('suggestions-card');
+            if (suggestionsCard) suggestionsCard.classList.remove('drag-active');
         }
     });
 

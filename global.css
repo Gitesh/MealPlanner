@@ -798,3 +798,12 @@ body.glass-mode .modal-content select {
 .suggestion-action .link-btn-icon {
   margin-right: 0.2rem;
 }
+
+/* Glass Tint Highlight for Drag Drop */
+.card.drag-active::before {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.card::before {
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
