@@ -351,5 +351,85 @@
       "Chopped tomatoe"
     ],
     "url": "https://www.hellofresh.co.uk/recipes/bacon-penne-allarrabbiata-600192d596070835a23d3102"
+  },
+  {
+    "id": "m1769339909501",
+    "name": "Loaded Patatas Rancheros with Greek Cheese",
+    "tags": [
+      "35 mins",
+      "529 kcal",
+      "gluten free",
+      "Mexican",
+      "vegetarian"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Waxy potatoes",
+      "Black beans",
+      "Sweetcorn",
+      "Greek salad cheese",
+      "Lime",
+      "Brown onion",
+      "Chipotle paste",
+      "Tomato paste",
+      "Mayonnaise",
+      "Garlic clove",
+      "Vegetable stock mix",
+      "Chives",
+      "Ground smoked paprika",
+      "Green chilli"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/recipes/loaded-patatas-rancheros-with-greek-cheese-pickled-chilli"
+  },
+  {
+    "id": "m1769340383317",
+    "name": "Creamy Chickpea Curry Loaded Baked Sweet Potato",
+    "tags": [
+      "gluten free",
+      "Indian",
+      "sweet potato",
+      "vegan",
+      "vegetarian"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Chickpeas",
+      "Sweet potato",
+      "Spinich",
+      "Lime",
+      "Brown onion",
+      "Tomato paste",
+      "Cashew nuts",
+      "Solid creamed coconut",
+      "Red chilli",
+      "Curry powder",
+      "Fresh root ginger",
+      "Garlic clove",
+      "Vegetable stock mix"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/recipes/creamy-chickpea-curry-loaded-sweet-potato"
+  },
+  {
+    "id": "m1769340818449",
+    "name": "Lemon-crusted Basa with Lentil Stew",
+    "tags": [
+      "fish",
+      "stew",
+      "warming"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Green lentils",
+      "Basa fillets",
+      "Lemon",
+      "Carrot",
+      "Brown onion",
+      "Cheddar cheese",
+      "Panko breadcrumbs",
+      "Vegetable stock mix",
+      "Parsley",
+      "Dried bay leaf"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/recipes/Lemon-Crusted-Basa-With-Lentil-Stew"
   }
 ]
