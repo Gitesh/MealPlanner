@@ -318,19 +318,29 @@
   },
   {
     "id": "m19",
-    "name": "Fish Shak",
+    "name": "Goan-style Fish & Spinach Curry with Coriander Rice",
     "tags": [
-      "30 min",
+      "20 min",
       "fish",
       "Indian"
     ],
     "popularity": 0.5,
     "ingredients": [
-      "White fish",
-      "Onions",
-      "Potatoes",
-      "Chapati"
-    ]
+      "Ground turmeric (1tsp)",
+      "White basmati rice (130g)",
+      "Red chilli",
+      "Basa fillets",
+      "Cultured coconut (80g)",
+      "Curry powder (1tbsp)",
+      "Garlic clove",
+      "Fresh root ginger (15g)",
+      "Coriander (10g)",
+      "Vegetable stock mix (5.5g)",
+      "Tomato paste (16g)",
+      "Spinach (80g)",
+      "Red onion"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/fish-recipes/goan-fish-spinach-curry-coriander-rice"
   },
   {
     "id": "m1766939627163",
@@ -368,7 +378,7 @@
       "Waxy potatoes",
       "Black beans",
       "Sweetcorn",
-      "Greek salad cheese",
+      "Cheese (Greek salad)",
       "Lime",
       "Brown onion",
       "Chipotle paste",
@@ -425,12 +435,90 @@
       "Lemon",
       "Carrot",
       "Brown onion",
-      "Cheddar cheese",
+      "Cheese (cheddar)",
       "Panko breadcrumbs",
       "Vegetable stock mix",
       "Parsley",
       "Dried bay leaf"
     ],
     "url": "https://www.gousto.co.uk/cookbook/recipes/Lemon-Crusted-Basa-With-Lentil-Stew"
+  },
+  {
+    "id": "m1771157485425",
+    "name": "Chicken with Zingy Spinach Quinoa and Avocado",
+    "tags": [
+      "20 min",
+      "avacado",
+      "chicken",
+      "quinoa"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Spring onion",
+      "Red chilli",
+      "Chicken breast portions",
+      "Cayenne pepper (0.5tsp)",
+      "Ground smoked paprika (1tsp)",
+      "Ground allspice (1tsp)",
+      "Cannellini beans (390g)",
+      "Garlic clove",
+      "Coriander (10g)",
+      "Avocado",
+      "Quinoa (70g)",
+      "Soy sauce (15ml)",
+      "Spinach (80g)",
+      "Lime"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/recipes/spicy-chicken-green-quinoa-avocado"
+  },
+  {
+    "id": "m1771158562205",
+    "name": "Creamy Chickpea Curry Loaded Baked Sweet Potato",
+    "tags": [
+      "25 min",
+      "sweet potato",
+      "vegetarian"
+    ],
+    "popularity": 0.5,
+    "ingredients": [
+      "Red chilli",
+      "Curry powder (1tbsp)",
+      "Garlic clove",
+      "Fresh root ginger (15g)",
+      "Chickpeas (390g)",
+      "Brown onion",
+      "Vegetable stock mix (5.5g)",
+      "Tomato paste (16g)",
+      "Spinach (120g)",
+      "Lime",
+      "Cashew nuts (25g)",
+      "Sweet potato x2",
+      "Solid creamed coconut (25g)"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/recipes/creamy-chickpea-curry-loaded-sweet-potato"
+  },
+  {
+    "id": "m1771159807065",
+    "name": "Aubergine & Chickpea Moussaka",
+    "tags": [
+      "45 min",
+      "Greek",
+      "oven",
+      "vegetarian"
+    ],
+    "popularity": 0.92,
+    "ingredients": [
+      "Aubergine",
+      "Onion",
+      "Chickpeas (390g)",
+      "Cornflour",
+      "Dried oregano",
+      "Chopped tomatoes",
+      "Garlic clove",
+      "Cheese (Gran padano or hard cheese 60g)",
+      "Parsley",
+      "Vegetable stock mix"
+    ],
+    "url": "https://www.gousto.co.uk/cookbook/recipes/lighter-aubergine-lentil-moussaka"
   }
 ]
