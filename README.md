@@ -1,4 +1,4 @@
-# 🍽️ Simple Meal Planner
+# Simple Meal Planner
 
 **Plan your week, one delicious meal at a time.**
 
@@ -7,17 +7,22 @@
 
 Say goodbye to the dreaded "What's for dinner?" question! **Simple Meal Planner** is your personal meal planning companion that makes weekly meal organisation effortless, fun, and flexible. Whether you're planning for 3 days or a whole week, we've got you covered! 
 
+Pick dishes from your personal collection, generate shopping lists, and keep everything neatly in one place. No account required. No servers. Just you and good food.
+
+![Main Interface](./screenshots/main_interface.png)
+
 ---
 
-##  Why You'll Love It
+## Why You'll Love It
 
 - **Smart Randomisation**: Tired of eating the same things? Let our intelligent algorithm surprise you with meal suggestions based on popularity scores.
 - **Drag & Drop Magic**: Don't like a suggestion? Simply drag and drop any meal from your database to replace it instantly.
 - **Instant Shopping Lists**: Generate comprehensive shopping lists with one click - complete with calendar integration!
 - **Powerful Search**: Find meals by name or tags in seconds
-- **Your Data, Your Way**: Import and export your meal database in JSON or CSV format
+- **Your Data, Your Way**: Import and export your meal database in JSON or CSV format, and save it back the same way.
 - **Beautiful & Responsive**: Works seamlessly on desktop, tablet, and mobile devices
 - **Lightning Fast**: No sign-ups, no servers, runs entirely in your browser!
+- **Calendar integration** — push individual meals or your full shopping list to Google Calendar with ingredients included.
 
 ---
 
@@ -26,13 +31,22 @@ Say goodbye to the dreaded "What's for dinner?" question! **Simple Meal Planner*
 It's incredibly simple:
 
 1. **Visit**: [https://gitesh.github.io/MealPlanner/](https://gitesh.github.io/MealPlanner/)
-2. **Explore**: The app comes pre-loaded with example meals
+2. **Explore**: The app comes pre-loaded with example meals spanning Italian, Indian, Japanese, Mexican and more.
 3. **Customise**: Add your own favourite meals to the database
 4. **Plan**: Generate a meal plan for 3, 5, or 7 days. Search / filter meals by tag, then drag from the list on the right to replace a meal
 5. **Organise**: Click the calendar icon to add the meal to your calendar
-6. **Shop**: Create your shopping list and start cooking!
+6. **Shopping List**: Tick off what you already have, adjust quantities, then copy or push to your calendar.
 
 ---
+--
+
+## Features in Detail
+
+### Your Weekly Meal Plan
+
+The left panel displays your current plan with dates, meal names, recipe links (where available), and calendar buttons. Choose between 3, 5, or 7-day plans. Toggle date visibility on or off. Hit randomise as many times as you like — a slot-machine-style spin effect makes the process surprisingly satisfying.
+
+![Main Interface](./screenshots/main_interface.png)
 
 
 
@@ -45,25 +59,27 @@ The clean, intuitive interface shows your weekly meal plan on the left and your 
 
 ---
 
-###  Smart Meal Randomisation
+### Search and Filter
 
-<!-- ![Randomise Meals](./screenshots/randomize_meals.webp) -->
+Type into the search bar to filter by meal name or tag in real time. Use the tag dropdown (with Ctrl-click for multi-select) to drill down further. Click any tag on a meal card to instantly filter by that tag.
 
-Don't like the suggested meals? Just hit that randomise button and watch your entire meal plan transform! The intelligent algorithm uses popularity scores to suggest meals you'll love.
-
----
-
-###  Smart Search & Filtering
-
-<!-- ![Search Functionality](./screenshots/search_filter.webp) -->
-
-Looking for something specific? Use our powerful search to filter by meal names or tags like "Mexican", "Quick", "Vegetarian" - watch the results update in real-time as you type!
+![Search and Filter](./screenshots/search_filter.png)
 
 ---
 
-###  Shopping List Generator
-One click generates your complete shopping list from your meal plan! Watch as you tick off items you already have, copy the list to your clipboard, or add everything directly to your calendar. Meal prep has never been easier!
-![Shopping List Modal](screenshots/shopping_list.png)
+### Shopping List
+
+Generate a complete, alphabetised shopping list from your current meal plan. Quantities are automatically aggregated when the same ingredient appears in multiple meals. Tick items off, adjust amounts with the +/- controls, then copy to clipboard or add the whole list to Google Calendar.
+
+![Shopping List](./screenshots/shopping_list_modal.png)
+
+
+
+1. **Rate your favourites** — set popularity above 0.8 for dishes you want to see often. Lower it for meals you enjoy but want less frequently.
+2. **Tag thoughtfully** — use cuisines (Italian, Thai), timings (15 min, 40 min), dietary labels (vegetarian, vegan), or main proteins (chicken, fish) so filters stay useful.
+3. **Back up regularly** — export your database after adding several meals. The app stores nothing on a server, so an exported JSON file is your safety net.
+4. **Use the expanded view** — click *Expand* in the database footer to spread your meal cards across the full width of the screen, making it easier to browse a large collection.
+5. **Add recipe URLs** — meals with a linked recipe show a book icon on both the database card and the plan card, giving you one-click access while cooking.
 
 ---
 
@@ -123,10 +139,23 @@ Built with modern web technologies for maximum performance and simplicity:
 - **Responsive Design**: Mobile-first approach with Flexbox
 - **Google Fonts**: Poppins font family for clean typography
 - **Material Symbols**: Modern icon system
+- **Web Audio API** for the slot-machine sound effects
 
 ---
 
-## 💡 Pro Tips
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `?` or `Ctrl + /` | Open the user guide |
+
+---
+
+## Built With
+
+
+
+## Tips
 
 1. **Rate Your Favourites**: Set higher popularity scores (0.8-1.0) for meals you love - they'll appear more often in randomised plans!
 2. **Use Tags Wisely**: Tag meals with cuisines, cooking time (Quick, Slow), dietary needs (Vegetarian, Vegan), or main proteins (Chicken, Fish)
@@ -158,7 +187,7 @@ We believe meal planning should be **joyful, not a chore**. That's why Simple Me
 
 ---
 
-##  Contributing
+## Contributing
 
 Found a bug? Have a feature idea? Contributions are welcome! Feel free to:
 
@@ -173,17 +202,16 @@ Found a bug? Have a feature idea? Contributions are welcome! Feel free to:
 
 Ready to revolutionise your meal planning? 
 
-### 👉 [Launch Simple Meal Planner](https://gitesh.github.io/MealPlanner/) 👈
+**[Launch Simple Meal Planner](https://gitesh.github.io/MealPlanner/)**
 
-No installation, no sign-up, just simple meal planning at your fingertips! 
+No installation. No sign-up. Just open and start planning.
 
 ---
 
 <div align="center">
 
-**Made with lots of good food in mind**
+**Made with good food in mind**
 
-[Live Demo](https://gitesh.github.io/MealPlanner/) • [Report Bug](https://github.com/gitesh/MealPlanner/issues) • [Request Feature](https://github.com/gitesh/MealPlanner/issues)
+[Live Demo](https://gitesh.github.io/MealPlanner/) · [Report Bug](https://github.com/gitesh/MealPlanner/issues) · [Request Feature](https://github.com/gitesh/MealPlanner/issues)
 
 </div>
-
