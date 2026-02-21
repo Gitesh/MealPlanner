@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestions.forEach((meal, index) => {
             const suggestionEl = document.createElement('div');
             suggestionEl.className = 'suggestion';
+            suggestionEl.draggable = true;
             suggestionEl.dataset.mealId = meal.id;
             const buttonDate = new Date(date);
             suggestionEl.innerHTML = `
@@ -510,11 +511,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Drag and drop functionality
     let draggedItem = null;
+    let draggedSuggestion = null;
 
     dbList.addEventListener('dragstart', e => {
-        if (e.target.classList.contains('meal-card')) {
-            draggedItem = e.target;
-            setTimeout(() => e.target.style.opacity = '0.5', 0);
+        const card = e.target.closest('.meal-card');
+        if (card) {
+            draggedItem = card;
+            setTimeout(() => card.style.opacity = '0.5', 0);
 
             // Highlight drop area
             const suggestionsCard = document.getElementById('suggestions-card');
@@ -524,12 +527,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dbList.addEventListener('dragend', e => {
         if (draggedItem) {
-            setTimeout(() => e.target.style.opacity = '1', 0);
+            draggedItem.style.opacity = '1';
             draggedItem = null;
 
             // Remove highlight
             const suggestionsCard = document.getElementById('suggestions-card');
-            if (suggestionsCard) suggestionsCard.classList.remove('drag-active');
+            if (suggestionsCard) {
+                suggestionsCard.classList.remove('drag-active');
+            }
+        }
+        cleanupDragStates();
+    });
+
+    suggestionsList.addEventListener('dragstart', e => {
+        const target = e.target.closest('.suggestion');
+        if (target) {
+            draggedSuggestion = target;
+            setTimeout(() => target.style.opacity = '0.5', 0);
+
+            // Also trigger the card highlight for reordering
+            const suggestionsCard = document.getElementById('suggestions-card');
+            if (suggestionsCard) suggestionsCard.classList.add('drag-active');
         }
     });
 
@@ -548,30 +566,93 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    suggestionsList.addEventListener('dragend', e => {
+        if (draggedSuggestion) {
+            draggedSuggestion.style.opacity = '1';
+            draggedSuggestion = null;
+        }
+        cleanupDragStates();
+    });
+
     suggestionsList.addEventListener('drop', e => {
         e.preventDefault();
         const target = e.target.closest('.suggestion');
-        if (target && draggedItem) {
-            target.classList.remove('drag-over');
+        if (!target) return;
+
+        target.classList.remove('drag-over');
+
+        if (draggedSuggestion && draggedSuggestion !== target) {
+            // Reorder by swapping meal data (keeps dates fixed)
+            swapSuggestionContent(draggedSuggestion, target);
+            showToast('Meal plan reordered!');
+        } else if (draggedItem) {
+            // Replacement from DB
             const sourceMealId = draggedItem.dataset.mealId;
-            const meal = meals.find(m => m.id === sourceMealId);
-
-            // update visible meal name in the suggestion
-            const mealNameEl = target.querySelector('.meal-name');
-            if (mealNameEl) mealNameEl.textContent = meal.name;
-
-            // update suggestion's dataset so other logic can reference the new meal id
-            target.dataset.mealId = meal.id;
-
-            // IMPORTANT: update the calendar button's data so "Add to Calendar" uses the new meal
-            const calBtn = target.querySelector('.calendar-btn');
-            if (calBtn) {
-                calBtn.dataset.mealName = meal.name;
-            }
-
+            replaceSuggestionContent(target, sourceMealId);
             showToast('Meal plan updated!');
         }
+
+        cleanupDragStates();
     });
+
+    function swapSuggestionContent(el1, el2) {
+        const mealId1 = el1.dataset.mealId;
+        const mealId2 = el2.dataset.mealId;
+
+        // Swap attributes and HTML content except the date section
+        el1.dataset.mealId = mealId2;
+        el2.dataset.mealId = mealId1;
+
+        const info1 = el1.querySelector('.suggestion-info').innerHTML;
+        const action1 = el1.querySelector('.suggestion-action').innerHTML;
+
+        el1.querySelector('.suggestion-info').innerHTML = el2.querySelector('.suggestion-info').innerHTML;
+        el1.querySelector('.suggestion-action').innerHTML = el2.querySelector('.suggestion-action').innerHTML;
+
+        el2.querySelector('.suggestion-info').innerHTML = info1;
+        el2.querySelector('.suggestion-action').innerHTML = action1;
+
+        // Re-attach calendar listeners for these two specific cards
+        [el1, el2].forEach(el => {
+            const calBtn = el.querySelector('.calendar-btn');
+            if (calBtn) {
+                calBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openCalendarLink(calBtn.dataset.mealName, new Date(calBtn.dataset.date));
+                });
+            }
+        });
+    }
+
+    function replaceSuggestionContent(targetEl, mealId) {
+        const meal = meals.find(m => m.id === mealId);
+        if (!meal) return;
+
+        targetEl.dataset.mealId = meal.id;
+
+        const mealNameEl = targetEl.querySelector('.meal-name');
+        if (mealNameEl) mealNameEl.textContent = meal.name;
+
+        const calBtn = targetEl.querySelector('.calendar-btn');
+        if (calBtn) {
+            calBtn.dataset.mealName = meal.name;
+        }
+
+        const actionArea = targetEl.querySelector('.suggestion-action');
+        // If there was a recipe icon, update or remove it
+        // Simpler to just re-generate the action area content if we want consistent UI
+        // But for now, just updating name and calendar data is the core.
+    }
+
+    function cleanupDragStates() {
+        document.querySelectorAll('.suggestion.drag-over').forEach(el => {
+            el.classList.remove('drag-over');
+        });
+        const suggestionsCard = document.getElementById('suggestions-card');
+        if (suggestionsCard) {
+            suggestionsCard.classList.remove('drag-active');
+        }
+    }
 
     function downloadFile(filename, content, type) {
         const dataStr = `data:${type};charset=utf-8,${encodeURIComponent(content)}`;
