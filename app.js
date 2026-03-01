@@ -633,15 +633,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const mealNameEl = targetEl.querySelector('.meal-name');
         if (mealNameEl) mealNameEl.textContent = meal.name;
 
-        const calBtn = targetEl.querySelector('.calendar-btn');
-        if (calBtn) {
-            calBtn.dataset.mealName = meal.name;
-        }
-
+        // Rebuild the action area so the recipe URL icon matches the new meal
         const actionArea = targetEl.querySelector('.suggestion-action');
-        // If there was a recipe icon, update or remove it
-        // Simpler to just re-generate the action area content if we want consistent UI
-        // But for now, just updating name and calendar data is the core.
+        if (actionArea) {
+            const calBtn = actionArea.querySelector('.calendar-btn');
+            const existingDate = calBtn ? calBtn.dataset.date : new Date().toISOString();
+
+            actionArea.innerHTML = `
+                ${meal.url ? `<button class="btn link-btn-icon" onclick="window.open('${meal.url}', '_blank')" title="View Recipe"><span class="material-symbols-outlined">menu_book</span></button>` : ''}
+                <button class="btn highlight-yellow calendar-btn" data-meal-name="${meal.name}" data-date="${existingDate}" title="Add to Calendar">
+                    <span class="material-symbols-outlined">event</span>
+                </button>
+            `;
+
+            // Re-attach calendar click listener
+            const newCalBtn = actionArea.querySelector('.calendar-btn');
+            if (newCalBtn) {
+                newCalBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openCalendarLink(newCalBtn.dataset.mealName, new Date(newCalBtn.dataset.date));
+                });
+            }
+        }
     }
 
     function cleanupDragStates() {
